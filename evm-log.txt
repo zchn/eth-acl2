@@ -1,0 +1,20 @@
+(UNSET-WATERFALL-PARALLELISM)
+(ASSIGN SCRIPT-MODE T)
+ T
+(SET-LD-PROMPT T STATE)
+ T
+ACL2 !>>(SET-INHIBITED-SUMMARY-TYPES '(TIME STEPS))
+ (TIME STEPS)
+ACL2 !>>(SET-INHIBIT-OUTPUT-LST '(PROOF-TREE))
+ (PROOF-TREE)
+ACL2 !>>(DEFUN TEST (X Y) (+ X Y))
+
+Since TEST is non-recursive, its admission is trivial.  We observe
+that the type of TEST is described by the theorem (ACL2-NUMBERP (TEST X Y)).
+We used primitive type reasoning.
+
+Summary
+Form:  ( DEFUN TEST ...)
+Rules: ((:FAKE-RUNE-FOR-TYPE-SET NIL))
+ TEST
+ACL2 !>>Bye.

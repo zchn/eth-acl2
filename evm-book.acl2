@@ -1,0 +1,11 @@
+(include-book "tools/run-script" :dir :system)
+(run-script "evm") ; optionally add keyword arguments
+(ubu 1)
+
+; Help dependency scanner.
+#||
+(depends-on "evm-log.txt")
+(include-book "op")
+;; (include-book ...)
+;; ...
+||#
