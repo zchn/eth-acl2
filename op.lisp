@@ -5,7 +5,7 @@
 (include-book "env")
 
 (defun run-add (env)
-  (if (env/terminated env)
+  (if (env/halted env)
       env
     (let* ((stack (env/stack env))
            (op0 (stack/n stack 0))

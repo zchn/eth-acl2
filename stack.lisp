@@ -1,14 +1,15 @@
 (in-package "ACL2")
 
-(defun mk-stack () nil)
+;; The word size of the machine (and thus size of stack items) is 256-bit. The
+;; stack has a maximum size of 1024.
+
+(defun mk-empty-stack () nil)
 
 (defun stack/push (stack v)
   (cons v stack))
 
 (defun stack/popn (stack n)
-  (if (zp n)
-      stack
-    (stack/popn (cdr stack) (1- n))))
+  (subseq n nil stack))
 
 (defun stack/n (stack n)
   (car (stack/popn stack n)))

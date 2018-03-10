@@ -7,14 +7,21 @@ ACL2 !>>(SET-INHIBITED-SUMMARY-TYPES '(TIME STEPS))
  (TIME STEPS)
 ACL2 !>>(SET-INHIBIT-OUTPUT-LST '(PROOF-TREE))
  (PROOF-TREE)
-ACL2 !>>(DEFUN TEST (X Y) (+ X Y))
-
-Since TEST is non-recursive, its admission is trivial.  We observe
-that the type of TEST is described by the theorem (ACL2-NUMBERP (TEST X Y)).
-We used primitive type reasoning.
+ACL2 !>>(INCLUDE-BOOK "exec")
 
 Summary
-Form:  ( DEFUN TEST ...)
-Rules: ((:FAKE-RUNE-FOR-TYPE-SET NIL))
- TEST
+Form:  ( INCLUDE-BOOK "exec" ...)
+Rules: NIL
+ "exec.lisp"
+ACL2 !>>(INCLUDE-BOOK "env")
+
+The event ( INCLUDE-BOOK "env" ...) is redundant.  See :DOC redundant-
+events.
+
+Summary
+Form:  ( INCLUDE-BOOK "env" ...)
+Rules: NIL
+ :REDUNDANT
+ACL2 !>>(ENV/STEP (MK-ENV-OP "606040"))
+(1 "606040" NIL NIL NIL NIL 10000)
 ACL2 !>>Bye.

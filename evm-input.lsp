@@ -1,3 +1,4 @@
-(defun test (x y) (+ x y))
+(include-book "exec")
+(include-book "env")
 
-(include-book "op")
+(env/step (mk-env-op "606040"))
