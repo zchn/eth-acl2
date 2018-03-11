@@ -17,6 +17,8 @@
                 ((op/calldatasizep  nextop) (exec-calldatasize env))
                 ((op/push1p  nextop) (exec-push1 env))
                 ((op/push4p  nextop) (exec-push4 env))
+                ((op/dup1p  nextop) (exec-dup1 env))
+                ((op/dup2p  nextop) (exec-dup2 env))
                 ((op/mstorep  nextop) (exec-mstore env))
                 ((op/jumpip  nextop) (exec-jumpi env))
                 (t (exec-unknown env))))
