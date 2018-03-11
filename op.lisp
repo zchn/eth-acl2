@@ -34,6 +34,8 @@
 
 (defun op/jumpip (op) (equal op "57"))
 
+(defun op/jumpdestp (op) (equal op "5b"))
+
 (defun op/push1p (op) (equal op "60"))
 
 (defun op/push4p (op) (equal op "63"))

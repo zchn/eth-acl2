@@ -22,6 +22,7 @@
                 ((op/dup2p  nextop) (exec-dup2 env))
                 ((op/mstorep  nextop) (exec-mstore env))
                 ((op/jumpip  nextop) (exec-jumpi env))
+                ((op/jumpdestp  nextop) (exec-jumpdest env))
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 

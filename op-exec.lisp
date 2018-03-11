@@ -120,6 +120,8 @@
                     (env/set-pc env dest))))
     new-env))
 
+(defun exec-jumpdest (env) (env/pc++ env))
+
 (defun exec-unknown (env)
   (let ((tmp-env
          (env/set-halted env (str::cat "Halted: unknown OP:"
