@@ -18,6 +18,15 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-iszero (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (new-stack (stack/push (stack/popn stack 1)
+                                (if (zp op0) 1 0)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-calldatasize (env)
   (let* ((stack (env/stack env))
          (datasize (rom/datasize (env/rom env)))

@@ -10,6 +10,8 @@
 
 ;; (defun op/ltp (op) (equal op "10"))
 
+(defun op/iszerop (op) (equal op "15"))
+
 ;; (defun op/sha3p (op) (equal op "20"))
 
 ;; (defun op/addressp (op) (equal op "30"))
