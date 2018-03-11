@@ -56,6 +56,14 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-callvalue (env)
+  (let* ((stack (env/stack env))
+         ; TODO(zchn): Implement CALLVALUE correctly.
+         (new-stack (stack/push stack 10000))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-calldataload (env)
   (let* ((stack (env/stack env))
          (addr (stack/n stack 0))
