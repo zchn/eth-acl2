@@ -18,6 +18,8 @@
 
 ;; (defun op/addressp (op) (equal op "30"))
 
+(defun op/calldataloadp (op) (equal op "35"))
+
 (defun op/calldatasizep (op) (equal op "36"))
 
 ;; (defun op/blockhashp (op) (equal op "40"))

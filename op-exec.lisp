@@ -36,6 +36,15 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-calldataload (env)
+  (let* ((stack (env/stack env))
+         (addr (stack/n stack 0))
+         (new-stack (stack/push (stack/popn stack 1)
+                                (rom/n-w256 (env/rom env) addr)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-calldatasize (env)
   (let* ((stack (env/stack env))
          (datasize (rom/datasize (env/rom env)))

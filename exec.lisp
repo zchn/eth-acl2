@@ -12,6 +12,7 @@
                 ((op/addp  nextop) (exec-add env))
                 ((op/expp  nextop) (exec-exp env))
                 ((op/iszerop  nextop) (exec-iszero env))
+                ((op/calldataloadp  nextop) (exec-calldataload env))
                 ((op/calldatasizep  nextop) (exec-calldatasize env))
                 ((op/push1p  nextop) (exec-push1 env))
                 ((op/mstorep  nextop) (exec-mstore env))
