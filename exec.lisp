@@ -6,10 +6,13 @@
 
 (defun env/step (env)
   (if (env/halted env) env
-    (let ((nextop (env/nextop env)))
-      (cond ((op/stopp nextop) (exec-stop env))
-            ((op/addp  nextop) (exec-add env))
-            (t (exec-unknown env))))))
+    (if (env/has-nextop env)
+        (let ((nextop (env/nextop env)))
+          (cond ((op/stopp nextop) (exec-stop env))
+                ((op/addp  nextop) (exec-add env))
+                ((op/push1p  nextop) (exec-push1 env))
+                (t (exec-unknown env))))
+      (env/set-halted env "Halted: pc out of range."))))
 
 (defun env/exec (env)
   (if (plusp (env/gas env))

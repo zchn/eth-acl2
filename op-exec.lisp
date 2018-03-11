@@ -1,9 +1,12 @@
 (in-package "ACL2")
 
+(include-book "std/strings/top" :dir :system)
+(include-book "std/strings/pretty" :dir :system)
+
 (include-book "env")
 
 (defun exec-stop (env)
-  (let ((tmp-env (env/set-halted env "Halted due to STOP.")))
+  (let ((tmp-env (env/set-halted env "Halted: STOP.")))
     (env/pc++ tmp-env)))
 
 (defun exec-add (env)
@@ -26,5 +29,7 @@
     new-env))
 
 (defun exec-unknown (env)
-  (let ((tmp-env (env/set-halted env "Halted due to unknown OP.")))
+  (let ((tmp-env
+         (env/set-halted env (str::cat "Halted: unknown OP:"
+                                       (str::pretty (env/nextop env))))))
     (env/pc++ tmp-env)))

@@ -1,6 +1,6 @@
 (in-package "ACL2")
 
-(include-book "std/strings/hex" :dir :system)
+(include-book "std/strings/top" :dir :system)
 
 ;; The machine does not follow the standard von Neumann architecture. Rather
 ;; than storing program code in generally-accessible memory or storage, it is
@@ -9,6 +9,9 @@
 
 (defun mk-rom (opstring)
   (if (stringp opstring) opstring ""))
+
+(defun rom/has-n (rom n)
+  (and (<= 0 n) (< (* n 2) (length rom))))
 
 (defun rom/n-opstring (rom n)
   (subseq rom (* n 2) (* (1+ n) 2)))

@@ -41,6 +41,11 @@
 
 (defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
 
+(defun env/has-nextop (env)
+  (let* ((pc (env/pc env))
+         (rom (env/rom env)))
+    (rom/has-n rom pc)))
+
 (defun env/nextop (env) (let* ((pc (env/pc env))
                                (rom (env/rom env)))
                           (rom/n-op rom pc)))

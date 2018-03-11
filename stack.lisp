@@ -9,7 +9,7 @@
   (cons v stack))
 
 (defun stack/popn (stack n)
-  (subseq n nil stack))
+  (subseq stack n nil))
 
 (defun stack/n (stack n)
   (car (stack/popn stack n)))
