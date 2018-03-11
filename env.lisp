@@ -19,7 +19,9 @@
 
 (defun env/pc (env) (nth 0 env))
 
-(defun env/pc+n (env n) (update-nth 0 (+ n (env/pc env)) env))
+(defun env/set-pc (env pc) (update-nth 0 pc env))
+
+(defun env/pc+n (env n) (env/set-pc env (+ n (env/pc env))))
 
 (defun env/pc++ (env) (env/pc+n env 1))
 

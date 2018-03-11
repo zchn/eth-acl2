@@ -57,6 +57,17 @@
          (new-env (env/pc++ tmp2-env)))
     new-env))
 
+(defun exec-jumpi (env)
+  (let* ((stack (env/stack env))
+         (dest (stack/n stack 0))
+         (condition (stack/n stack 1))
+         (new-stack (stack/popn stack 2))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (if (zp condition)
+                      (env/pc++ tmp-env)
+                    (env/set-pc env dest))))
+    new-env))
+
 (defun exec-unknown (env)
   (let ((tmp-env
          (env/set-halted env (str::cat "Halted: unknown OP:"

@@ -14,6 +14,7 @@
                 ((op/calldatasizep  nextop) (exec-calldatasize env))
                 ((op/push1p  nextop) (exec-push1 env))
                 ((op/mstorep  nextop) (exec-mstore env))
+                ((op/jumpip  nextop) (exec-jumpi env))
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 

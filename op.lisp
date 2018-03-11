@@ -24,6 +24,8 @@
 
 (defun op/mstorep (op) (equal op "52"))
 
+(defun op/jumpip (op) (equal op "57"))
+
 (defun op/push1p (op) (equal op "60"))
 
 ;; (defun op/push17p (op) (equal op "70"))
