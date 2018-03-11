@@ -14,6 +14,8 @@
 
 ;; (defun op/ltp (op) (equal op "10"))
 
+(defun op/eqp (op) (equal op "14"))
+
 (defun op/iszerop (op) (equal op "15"))
 
 ;; (defun op/sha3p (op) (equal op "20"))
