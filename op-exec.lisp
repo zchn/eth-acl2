@@ -73,6 +73,16 @@
          (new-env (env/pc+n tmp-env 2)))
     new-env))
 
+(defun exec-push4 (env)
+  (let* ((stack (env/stack env))
+         (pc (env/pc env))
+         (rom (env/rom env))
+         (value-to-push (rom/n-w32 rom (+ pc 1)))
+         (new-stack (stack/push stack value-to-push))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc+n tmp-env 5)))
+    new-env))
+
 (defun exec-mstore (env)
   (let* ((stack (env/stack env))
          (mem-addr (stack/n stack 0))

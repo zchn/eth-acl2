@@ -34,9 +34,13 @@
 
 (defun op/push1p (op) (equal op "60"))
 
+(defun op/push4p (op) (equal op "63"))
+
 ;; (defun op/push17p (op) (equal op "70"))
 
-;; (defun op/dup1p (op) (equal op "80"))
+(defun op/dup1p (op) (equal op "80"))
+
+(defun op/dup2p (op) (equal op "81"))
 
 ;; (defun op/swap1p (op) (equal op "90"))
 

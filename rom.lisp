@@ -32,6 +32,8 @@
     (+ (* (rom/n-w-helper rom n (1- num-bytes)) 256)
        (rom/n-byte-or-0 rom (+ n (1- num-bytes))))))
 
+(defun rom/n-w32 (rom n) (rom/n-w-helper rom n 4))
+
 (defun rom/n-w256 (rom n) (rom/n-w-helper rom n 32))
 
 (defun rom/datasize (rom)
