@@ -8,6 +8,8 @@
 
 (defun op/addp (op) (equal op "01"))
 
+(defun op/divp (op) (equal op "04"))
+
 (defun op/expp (op) (equal op "0a"))
 
 ;; (defun op/ltp (op) (equal op "10"))

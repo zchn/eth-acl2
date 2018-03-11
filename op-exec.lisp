@@ -18,6 +18,16 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-div (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2)
+                                (if (zp op1) 0 (truncate op0 op1))))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-exp (env)
   (let* ((stack (env/stack env))
          (op0 (stack/n stack 0))

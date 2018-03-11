@@ -10,6 +10,7 @@
         (let ((nextop (env/nextop env)))
           (cond ((op/stopp nextop) (exec-stop env))
                 ((op/addp  nextop) (exec-add env))
+                ((op/divp  nextop) (exec-div env))
                 ((op/expp  nextop) (exec-exp env))
                 ((op/iszerop  nextop) (exec-iszero env))
                 ((op/calldataloadp  nextop) (exec-calldataload env))
