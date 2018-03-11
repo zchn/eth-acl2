@@ -12,6 +12,8 @@
                 ((op/addp  nextop) (exec-add env))
                 ((op/divp  nextop) (exec-div env))
                 ((op/expp  nextop) (exec-exp env))
+                ((op/ltp  nextop) (exec-lt env))
+                ((op/gtp  nextop) (exec-gt env))
                 ((op/eqp  nextop) (exec-eq env))
                 ((op/iszerop  nextop) (exec-iszero env))
                 ((op/callvaluep  nextop) (exec-callvalue env))

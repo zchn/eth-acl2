@@ -12,7 +12,9 @@
 
 (defun op/expp (op) (equal op "0a"))
 
-;; (defun op/ltp (op) (equal op "10"))
+(defun op/ltp (op) (equal op "10"))
+
+(defun op/gtp (op) (equal op "11"))
 
 (defun op/eqp (op) (equal op "14"))
 
