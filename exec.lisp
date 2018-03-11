@@ -14,24 +14,9 @@
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 
-(defun env/exec (env)
-  (if (plusp (env/gas env))
-      (let* ((env1 (env/step env))
-             (new-env (env/gas-- env1)))
-        ;; TODO(zchn): Fix this.
-        (env/step
-         (env/step
-          (env/step
-           (env/step
-            (env/step
-             (env/step
-              (env/step
-               (env/step new-env)))))))))
-    env))
+(defun env/exec-hacky (env max-steps)
+  (if (zp max-steps) env
+      (let* ((env1 (env/step env)))
+        (env/exec-hacky env1 (- max-steps 1)))))
 
-;; (defun env/exec (env)
-;;   (if (plusp (env/gas env))
-;;       (let* ((env1 (env/step env))
-;;              (new-env (env/gas-- env1)))
-;;         (env/exec new-env))
-;;     env))
+(defun env/exec (env) (env/exec-hacky env 100000))
