@@ -18,6 +18,24 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-mul (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2) (* op0 op1)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-sub (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2) (- op0 op1)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-div (env)
   (let* ((stack (env/stack env))
          (op0 (stack/n stack 0))
@@ -149,6 +167,17 @@
     new-env))
 
 (defun exec-jumpdest (env) (env/pc++ env))
+
+(defun exec-swap1 (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push
+                     (stack/push (stack/popn stack 2) op0)
+                     op1))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
 
 (defun exec-unknown (env)
   (let ((tmp-env

@@ -8,6 +8,10 @@
 
 (defun op/addp (op) (equal op "01"))
 
+(defun op/mulp (op) (equal op "02"))
+
+(defun op/subp (op) (equal op "03"))
+
 (defun op/divp (op) (equal op "04"))
 
 (defun op/expp (op) (equal op "0a"))
@@ -50,7 +54,7 @@
 
 (defun op/dup2p (op) (equal op "81"))
 
-;; (defun op/swap1p (op) (equal op "90"))
+(defun op/swap1p (op) (equal op "90"))
 
 ;; (defun op/log0p (op) (equal op "a0"))
 

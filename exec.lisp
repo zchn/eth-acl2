@@ -10,6 +10,8 @@
         (let ((nextop (env/nextop env)))
           (cond ((op/stopp nextop) (exec-stop env))
                 ((op/addp  nextop) (exec-add env))
+                ((op/mulp  nextop) (exec-mul env))
+                ((op/subp  nextop) (exec-sub env))
                 ((op/divp  nextop) (exec-div env))
                 ((op/expp  nextop) (exec-exp env))
                 ((op/ltp  nextop) (exec-lt env))
@@ -26,6 +28,7 @@
                 ((op/mstorep  nextop) (exec-mstore env))
                 ((op/jumpip  nextop) (exec-jumpi env))
                 ((op/jumpdestp  nextop) (exec-jumpdest env))
+                ((op/swap1p  nextop) (exec-swap1 env))
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 
