@@ -11,6 +11,7 @@
           (cond ((op/stopp nextop) (exec-stop env))
                 ((op/addp  nextop) (exec-add env))
                 ((op/push1p  nextop) (exec-push1 env))
+                ((op/mstorep  nextop) (exec-mstore env))
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 

@@ -3,7 +3,7 @@
 ;; The word size of the machine (and thus size of stack items) is 256-bit. The
 ;; stack has a maximum size of 1024.
 
-(defun mk-empty-stack () nil)
+(defun mk-empty-stack () (list 'stack-bottom))
 
 (defun stack/push (stack v)
   (cons v stack))

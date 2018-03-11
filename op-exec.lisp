@@ -28,6 +28,18 @@
          (new-env (env/pc+n tmp-env 2)))
     new-env))
 
+(defun exec-mstore (env)
+  (let* ((stack (env/stack env))
+         (mem-addr (stack/n stack 0))
+         (value (stack/n stack 1))
+         (mem (env/mem env))
+         (new-stack (stack/popn stack 2))
+         (new-mem (memory/store mem mem-addr value))
+         (tmp-env (env/set-stack env new-stack))
+         (tmp2-env (env/set-mem tmp-env new-mem))
+         (new-env (env/pc++ tmp2-env)))
+    new-env))
+
 (defun exec-unknown (env)
   (let ((tmp-env
          (env/set-halted env (str::cat "Halted: unknown OP:"

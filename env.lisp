@@ -15,7 +15,7 @@
           (mk-empty-memory)
           (mk-empty-storage)
           nil
-          10000))
+          100))
 
 (defun env/pc (env) (nth 0 env))
 
@@ -30,6 +30,8 @@
 (defun env/set-stack (env stack) (update-nth 2 stack env))
 
 (defun env/mem (env) (nth 3 env))
+
+(defun env/set-mem (env memory) (update-nth 3 memory env))
 
 (defun env/storage (env) (nth 4 env))
 

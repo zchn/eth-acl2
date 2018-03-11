@@ -18,6 +18,8 @@
 
 (defun op/popp (op) (equal op "50"))
 
+(defun op/mstorep (op) (equal op "52"))
+
 (defun op/push1p (op) (equal op "60"))
 
 (defun op/push17p (op) (equal op "70"))
