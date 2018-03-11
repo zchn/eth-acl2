@@ -1,4 +1,6 @@
 (include-book "exec")
 (include-book "env")
 
-(env/step (mk-env-op "606040"))
+(env/exec (mk-env-op "606040"))
+
+(env/exec (mk-env-op "6060"))

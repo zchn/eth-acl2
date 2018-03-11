@@ -4,10 +4,28 @@
 
 (include-book "env")
 
-(defun run-add (env)
-  (if (env/halted env)
-      env
-    (let* ((stack (env/stack env))
-           (op0 (stack/n stack 0))
-           (op1 (stack/n stack 1)))
-      (stack/push (stack/popn stack 2) (+ op0 op1)))))
+(defun op/stopp (op) (equal op "00"))
+
+(defun op/addp (op) (equal op "01"))
+
+(defun op/ltp (op) (equal op "10"))
+
+(defun op/sha3p (op) (equal op "20"))
+
+(defun op/addressp (op) (equal op "30"))
+
+(defun op/blockhashp (op) (equal op "40"))
+
+(defun op/popp (op) (equal op "50"))
+
+(defun op/push1p (op) (equal op "60"))
+
+(defun op/push17p (op) (equal op "70"))
+
+(defun op/dup1p (op) (equal op "80"))
+
+(defun op/swap1p (op) (equal op "90"))
+
+(defun op/log0p (op) (equal op "a0"))
+
+(defun op/createp (op) (equal op "f0"))

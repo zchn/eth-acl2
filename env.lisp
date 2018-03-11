@@ -17,22 +17,30 @@
           nil
           10000))
 
-(defun env/pc (env) (car env))
+(defun env/pc (env) (nth 0 env))
 
-(defun env/pc++ (env) (list* (1+ (env/pc env)) (cdr env)))
+(defun env/pc+n (env n) (update-nth 0 (+ n (env/pc env)) env))
 
-(defun env/rom (env) (cdar env))
+(defun env/pc++ (env) (env/pc+n env 1))
 
-(defun env/stack (env) (cddar env))
+(defun env/rom (env) (nth 1 env))
 
-(defun env/mem (env) (cdddar env))
+(defun env/stack (env) (nth 2 env))
 
-(defun env/storage (env) (cddar (cddr env)))
+(defun env/set-stack (env stack) (update-nth 2 stack env))
 
-(defun env/halted (env) (cddar (cddr (cdr env))))
+(defun env/mem (env) (nth 3 env))
 
-(defun env/gas (env) (cddar (cddr (cddr env))))
+(defun env/storage (env) (nth 4 env))
+
+(defun env/halted (env) (nth 5 env))
+
+(defun env/set-halted (env halted) (update-nth 5 halted env))
+
+(defun env/gas (env) (nth 6 env))
+
+(defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
 
 (defun env/nextop (env) (let* ((pc (env/pc env))
                                (rom (env/rom env)))
-                          (rom/n rom pc)))
+                          (rom/n-op rom pc)))
