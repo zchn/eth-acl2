@@ -23,3 +23,6 @@
   (let* ((opstring (rom/n-opstring rom n))
          (val (str::strval16 opstring)))
     val))
+
+(defun rom/datasize (rom)
+  (/ (length rom) 2))
