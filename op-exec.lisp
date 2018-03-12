@@ -199,6 +199,14 @@
          (new-env (env/pc++ tmp2-env)))
     new-env))
 
+(defun exec-jump (env)
+  (let* ((stack (env/stack env))
+         (dest (stack/n stack 0))
+         (new-stack (stack/popn stack 1))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/set-pc tmp-env dest)))
+    new-env))
+
 (defun exec-jumpi (env)
   (let* ((stack (env/stack env))
          (dest (stack/n stack 0))

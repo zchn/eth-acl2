@@ -32,6 +32,7 @@
                 ((op/dup1p  nextop) (exec-dup1 env))
                 ((op/dup2p  nextop) (exec-dup2 env))
                 ((op/mstorep  nextop) (exec-mstore env))
+                ((op/jumpp  nextop) (exec-jump env))
                 ((op/jumpip  nextop) (exec-jumpi env))
                 ((op/jumpdestp  nextop) (exec-jumpdest env))
                 ((op/swap1p  nextop) (exec-swap1 env))
