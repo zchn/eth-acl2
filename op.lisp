@@ -24,9 +24,19 @@
 
 (defun op/iszerop (op) (equal op "15"))
 
+(defun op/andp (op) (equal op "16"))
+
+(defun op/orp (op) (equal op "17"))
+
+(defun op/xorp (op) (equal op "18"))
+
+(defun op/notp (op) (equal op "19"))
+
 ;; (defun op/sha3p (op) (equal op "20"))
 
 ;; (defun op/addressp (op) (equal op "30"))
+
+(defun op/callerp (op) (equal op "33"))
 
 (defun op/callvaluep (op) (equal op "34"))
 
@@ -49,6 +59,8 @@
 (defun op/push4p (op) (equal op "63"))
 
 ;; (defun op/push17p (op) (equal op "70"))
+
+(defun op/push32p (op) (equal op "7f"))
 
 (defun op/dup1p (op) (equal op "80"))
 

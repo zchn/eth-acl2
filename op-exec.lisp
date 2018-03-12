@@ -94,9 +94,52 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-and (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2) (logand op0 op1)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-or (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2) (logior op0 op1)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-xor (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (op1 (stack/n stack 1))
+         (new-stack (stack/push (stack/popn stack 2) (logxor op0 op1)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-not (env)
+  (let* ((stack (env/stack env))
+         (op0 (stack/n stack 0))
+         (new-stack (stack/push (stack/popn stack 1) (lognot op0)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-caller (env)
+  (let* ((stack (env/stack env))
+         ;; TODO(zchn): Implement CALLER correctly.
+         (new-stack (stack/push stack #xdeadbeef))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-callvalue (env)
   (let* ((stack (env/stack env))
-         ; TODO(zchn): Implement CALLVALUE correctly.
+         ;; TODO(zchn): Implement CALLVALUE correctly.
          (new-stack (stack/push stack 10000))
          (tmp-env (env/set-stack env new-stack))
          (new-env (env/pc++ tmp-env)))
