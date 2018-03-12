@@ -174,6 +174,7 @@
 
 (defun exec-push1 (env) (exec-push-helper env 1))
 (defun exec-push4 (env) (exec-push-helper env 4))
+(defun exec-push32 (env) (exec-push-helper env 32))
 
 (defun exec-dup-helper (env n)
   (let* ((stack (env/stack env))
@@ -221,6 +222,20 @@
          (tmp-env (env/set-stack env new-stack))
          (new-env (env/pc++ tmp-env)))
     new-env))
+
+(defun exec-log-helper (env n)
+  (let* ((stack (env/stack env))
+         ;; TODO(zchn): Actually support log operations
+         (new-stack (stack/popn stack (+ n 2)))
+         (tmp-env (env/set-stack env new-stack))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-log0 (env) (exec-log-helper env 0))
+(defun exec-log1 (env) (exec-log-helper env 1))
+(defun exec-log2 (env) (exec-log-helper env 2))
+(defun exec-log3 (env) (exec-log-helper env 3))
+(defun exec-log4 (env) (exec-log-helper env 4))
 
 (defun exec-unknown (env)
   (let ((tmp-env

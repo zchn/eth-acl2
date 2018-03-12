@@ -50,6 +50,8 @@
 
 (defun op/mstorep (op) (equal op "52"))
 
+(defun op/jumpp (op) (equal op "56"))
+
 (defun op/jumpip (op) (equal op "57"))
 
 (defun op/jumpdestp (op) (equal op "5b"))
@@ -68,6 +70,10 @@
 
 (defun op/swap1p (op) (equal op "90"))
 
-;; (defun op/log0p (op) (equal op "a0"))
+(defun op/log0p (op) (equal op "a0"))
+(defun op/log1p (op) (equal op "a1"))
+(defun op/log2p (op) (equal op "a2"))
+(defun op/log3p (op) (equal op "a3"))
+(defun op/log4p (op) (equal op "a4"))
 
 ;; (defun op/createp (op) (equal op "f0"))
