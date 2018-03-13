@@ -173,6 +173,7 @@
     new-env))
 
 (defun exec-push1 (env) (exec-push-helper env 1))
+(defun exec-push2 (env) (exec-push-helper env 2))
 (defun exec-push4 (env) (exec-push-helper env 4))
 (defun exec-push32 (env) (exec-push-helper env 32))
 

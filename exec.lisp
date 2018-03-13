@@ -27,6 +27,7 @@
                 ((op/calldataloadp  nextop) (exec-calldataload env))
                 ((op/calldatasizep  nextop) (exec-calldatasize env))
                 ((op/push1p  nextop) (exec-push1 env))
+                ((op/push2p  nextop) (exec-push2 env))
                 ((op/push4p  nextop) (exec-push4 env))
                 ((op/push32p  nextop) (exec-push32 env))
                 ((op/dup1p  nextop) (exec-dup1 env))
