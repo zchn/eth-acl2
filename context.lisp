@@ -37,7 +37,11 @@
    iw))
 
 (defun mk-dummy-context () (mk-context 198700 198701 198702 (list 19 87)
-                                       198704 198705 198706 198707 198708))
+                                       ;; Is
+                                       198704
+                                       ;; Iv
+                                       0
+                                       198706 198707 198708))
 
 (defun context/Is (context) (nth 4 context))
 
