@@ -1,12 +1,14 @@
 (in-package "ACL2")
 
+(include-book "context")
 (include-book "memory")
 (include-book "rom")
 (include-book "stack")
 (include-book "storage")
+(include-book "substate")
 
-(defun mk-env (pc rom stack mem storage halted gas)
-  (list pc rom stack mem storage halted gas))
+(defun mk-env (pc rom stack mem storage halted gas context substate)
+  (list pc rom stack mem storage halted gas context substate))
 
 (defun mk-env-op (opstring)
   (mk-env 0
@@ -15,7 +17,9 @@
           (mk-empty-memory)
           (mk-empty-storage)
           nil
-          100))
+          100
+          (mk-dummy-context)
+          (mk-dummy-substate)))
 
 (defun env/pc (env) (nth 0 env))
 
@@ -44,6 +48,14 @@
 (defun env/gas (env) (nth 6 env))
 
 (defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
+
+(defun env/context (env) (nth 7 env))
+
+(defun env/set-context (env context) (update-nth 7 context env))
+
+(defun env/substate (env) (nth 8 env))
+
+(defun env/set-substate (env substate) (update-nth 7 substate env))
 
 (defun env/has-nextop (env)
   (let* ((pc (env/pc env))
