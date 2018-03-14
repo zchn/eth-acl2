@@ -79,3 +79,5 @@
 (defun op/log4p (op) (equal op "a4"))
 
 ;; (defun op/createp (op) (equal op "f0"))
+
+(defun op/revertp (op) (equal op "fd"))

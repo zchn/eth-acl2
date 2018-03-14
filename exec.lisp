@@ -42,6 +42,7 @@
                 ((op/log2p  nextop) (exec-log2 env))
                 ((op/log3p  nextop) (exec-log3 env))
                 ((op/log4p  nextop) (exec-log4 env))
+                ((op/revertp  nextop) (exec-revert env))
                 (t (exec-unknown env))))
       (env/set-halted env "Halted: pc out of range."))))
 

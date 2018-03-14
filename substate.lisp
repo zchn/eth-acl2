@@ -6,4 +6,4 @@
 (defun mk-substate (suicide log touched refund)
   (list suicide log touched refund))
 
-(defun mk-dummy-substate () (mk-substate nil nil nil nil))
+(defun mk-empty-substate () (mk-substate nil nil nil 0))

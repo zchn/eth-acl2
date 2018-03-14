@@ -131,16 +131,14 @@
 
 (defun exec-caller (env)
   (let* ((stack (env/stack env))
-         ;; TODO(zchn): Implement CALLER correctly.
-         (new-stack (stack/push stack #xdeadbeef))
+         (new-stack (stack/push stack (env/context/Is env)))
          (tmp-env (env/set-stack env new-stack))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
 (defun exec-callvalue (env)
   (let* ((stack (env/stack env))
-         ;; TODO(zchn): Implement CALLVALUE correctly.
-         (new-stack (stack/push stack 10000))
+         (new-stack (stack/push stack (env/context/Iv env)))
          (tmp-env (env/set-stack env new-stack))
          (new-env (env/pc++ tmp-env)))
     new-env))
@@ -245,6 +243,16 @@
 (defun exec-log2 (env) (exec-log-helper env 2))
 (defun exec-log3 (env) (exec-log-helper env 3))
 (defun exec-log4 (env) (exec-log-helper env 4))
+
+(defun exec-revert (env)
+  (let* ((stack (env/stack env))
+         ;; TODO(zchn): calculate the correct gas consumption.
+         (new-stack (stack/popn stack 2))
+         (popped-env (env/set-stack env new-stack))
+         (reverted-env (env/set-substate popped-env (mk-empty-substate)))
+         (halted-env (env/set-halted reverted-env "Halted: REVERT"))
+         (new-env (env/pc++ halted-env)))
+    new-env))
 
 (defun exec-unknown (env)
   (let ((tmp-env

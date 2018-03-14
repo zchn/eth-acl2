@@ -19,7 +19,7 @@
           nil
           100
           (mk-dummy-context)
-          (mk-dummy-substate)))
+          (mk-empty-substate)))
 
 (defun env/pc (env) (nth 0 env))
 
@@ -50,6 +50,10 @@
 (defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
 
 (defun env/context (env) (nth 7 env))
+
+(defun env/context/Is (env) (context/Is (env/context env)))
+
+(defun env/context/Iv (env) (context/Iv (env/context env)))
 
 (defun env/set-context (env context) (update-nth 7 context env))
 
