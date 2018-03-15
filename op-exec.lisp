@@ -268,6 +268,19 @@
          (new-env (env/pc++ halted-env)))
     new-env))
 
+(defun exec-return (env)
+  (let* ((stack (env/stack env))
+         (mem-start (stack/n stack 0))
+         (mem-len (stack/n stack 1))
+         (new-stack (stack/popn stack 2))
+         (popped-env (env/set-stack env new-stack))
+         (halted-env (env/set-halted popped-env
+                                     (env/mem/load-byte-array popped-env
+                                                              mem-start
+                                                              mem-len)))
+         (new-env (env/pc++ halted-env)))
+    new-env))
+
 (defun exec-unknown (env)
   (let ((tmp-env
          (env/set-halted env (str::cat "Halted: unknown OP:"

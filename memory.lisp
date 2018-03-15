@@ -9,6 +9,11 @@
 (defun memory/load (memory addr)
   (assoc addr memory))
 
+(defun memory/load-byte-array (memory mem-start mem-len)
+  (if (zp mem-len) nil
+    (cons (memory/load memory mem-start)
+          (memory/load-byte-array memory (1+ mem-start) (1- mem-len)))))
+
 (defun memory/store (memory addr value)
   (put-assoc addr value memory))
 

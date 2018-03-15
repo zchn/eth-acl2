@@ -82,4 +82,6 @@
 
 ;; (defun op/createp (op) (equal op "f0"))
 
+(defun op/returnp (op) (equal op "f3"))
+
 (defun op/revertp (op) (equal op "fd"))

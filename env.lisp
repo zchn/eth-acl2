@@ -40,6 +40,9 @@
 
 (defun env/mem (env) (nth 3 env))
 
+(defun env/mem/load-byte-array (env mem-start mem-len)
+  (memory/load-byte-array (env/mem env) mem-start mem-len))
+
 (defun env/set-mem (env memory) (update-nth 3 memory env))
 
 (defun env/mem/store-byte-array (env addr array)
