@@ -65,7 +65,13 @@
 (defun op/push4p (op) (equal op "63"))
 
 ;; (defun op/push17p (op) (equal op "70"))
-
+;; (defun op/push26p (op) (equal op "79"))
+;; (defun op/push27p (op) (equal op "7a"))
+;; (defun op/push28p (op) (equal op "7b"))
+(defun op/push29p (op) (equal op "7c"))
+;; (defun op/push30p (op) (equal op "7d"))
+;; (defun op/push31p (op) (equal op "7e"))
+;; (defun op/push32p (op) (equal op "7f"))
 (defun op/push32p (op) (equal op "7f"))
 
 (defun op/dup1p (op) (equal op "80"))

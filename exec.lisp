@@ -30,6 +30,7 @@
                 ((op/push1p  nextop) (exec-push1 env))
                 ((op/push2p  nextop) (exec-push2 env))
                 ((op/push4p  nextop) (exec-push4 env))
+                ((op/push29p  nextop) (exec-push29 env))
                 ((op/push32p  nextop) (exec-push32 env))
                 ((op/dup1p  nextop) (exec-dup1 env))
                 ((op/dup2p  nextop) (exec-dup2 env))
