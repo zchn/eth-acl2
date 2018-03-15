@@ -38,3 +38,11 @@
 
 (defun rom/datasize (rom)
   (/ (length rom) 2))
+
+(defun rom/n-byte-array-helper (rom n num-bytes)
+  (if (zp num-bytes) nil
+    (cons (rom/n-byte-or-0 rom n)
+          (rom/n-byte-array-helper rom (1+ n) (1- num-bytes)))))
+
+(defun rom/n-byte-array (rom n)
+  (rom/n-byte-array-helper rom n (- (rom/datasize rom) n)))

@@ -44,6 +44,8 @@
 
 (defun op/calldatasizep (op) (equal op "36"))
 
+(defun op/codecopyp (op) (equal op "39"))
+
 ;; (defun op/blockhashp (op) (equal op "40"))
 
 ;; (defun op/popp (op) (equal op "50"))

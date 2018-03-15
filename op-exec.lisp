@@ -160,6 +160,20 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-codecopy (env)
+  (let* ((stack (env/stack env))
+         (mem-start (stack/n stack 0))
+         (rom-start (stack/n stack 1))
+         ;; TODO(zchn): Handle gas from (stack/n stack 2)
+         (new-stack (stack/popn stack 3))
+         (popped-env (env/set-stack env new-stack))
+         (memmed-env
+          (env/mem/store-byte-array
+           popped-env mem-start
+           (env/rom/n-byte-array popped-env rom-start)))
+         (new-env (env/pc++ memmed-env)))
+    new-env))
+
 (defun exec-push-helper (env n)
   (let* ((stack (env/stack env))
          (pc (env/pc env))

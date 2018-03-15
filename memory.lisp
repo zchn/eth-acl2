@@ -11,3 +11,10 @@
 
 (defun memory/store (memory addr value)
   (put-assoc addr value memory))
+
+(defun memory/store-byte-array (memory addr array)
+  (if (consp array)
+      (memory/store-byte-array (memory/store memory addr (car array))
+                               (1+ addr)
+                               (cdr array))
+    memory))
