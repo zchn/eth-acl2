@@ -7,6 +7,5 @@
 (depends-on "evm-log.txt")
 (include-book "exec")
 (include-book "env")
-;; (include-book ...)
-;; ...
+(include-book "contracts")
 ||#
