@@ -7,3 +7,5 @@
 ;; (include-book "std/alists/top" :dir :system)
 
 (defun mk-empty-storage () nil)
+
+(defun storage/validp (storage) (listp storage))

@@ -13,6 +13,8 @@
 (defun rom/has-n (rom n)
   (and (<= 0 n) (< (* n 2) (length rom))))
 
+(defun rom/validp (rom) (stringp rom))
+
 (defun rom/n-opstring (rom n)
   (subseq rom (* n 2) (* (1+ n) 2)))
 

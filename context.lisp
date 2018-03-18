@@ -43,6 +43,19 @@
                                        0
                                        198706 198707 198708))
 
+(defun address/validp (address) (natp address))
+
+(defun wei/validp (wei) (natp wei))
+
+(defun context/Id (context) (nth 3 context))
+
 (defun context/Is (context) (nth 4 context))
 
 (defun context/Iv (context) (nth 5 context))
+
+(defun context/validp (context)
+  (and (listp context)
+       (equal (length context) 9)
+       (listp (context/Id context))
+       (address/validp (context/Is context))
+       (wei/validp (context/Iv context))))

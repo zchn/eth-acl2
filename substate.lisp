@@ -7,3 +7,7 @@
   (list suicide log touched refund))
 
 (defun mk-empty-substate () (mk-substate nil nil nil 0))
+
+(defun substate/validp (substate)
+  (and (listp substate)
+       (equal (length substate) 4)))

@@ -1,8 +1,9 @@
-(include-book "exec")
-(include-book "env")
 (include-book "contracts")
+(include-book "env")
+(include-book "exec")
+(include-book "exec-defthms")
 
-(env/exec (mk-env-op *simple-adder-contract*))
+(env/exec (mk-env-op *simple-storage-contract*))
 
 (env/exec (mk-env-op *deed-contract*))
 

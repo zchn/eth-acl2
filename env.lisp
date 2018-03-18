@@ -71,6 +71,17 @@
 
 (defun env/set-substate (env substate) (update-nth 7 substate env))
 
+(defun env/validp (env)
+  (and (integerp (env/pc env))
+       (rom/validp (env/rom env))
+       (stack/validp (env/stack env))
+       (memory/validp (env/mem env))
+       (storage/validp (env/storage env))
+       t ;; (halted/validp (env/halted env))
+       (natp (env/gas env)) ;; (gas/validp (env/gas env))
+       (context/validp (env/context env))
+       (substate/validp (env/substate env))))
+
 (defun env/has-nextop (env)
   (let* ((pc (env/pc env))
          (rom (env/rom env)))

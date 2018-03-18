@@ -6,6 +6,8 @@
 
 (defun mk-empty-memory () nil)
 
+(defun memory/validp (memory) (listp memory))
+
 (defun memory/load (memory addr)
   (assoc addr memory))
 

@@ -5,6 +5,8 @@
 
 (defun mk-empty-stack () (list 'stack-bottom))
 
+(defun stack/validp (stack) (listp stack))
+
 (defun stack/push (stack v)
   (cons v stack))
 
