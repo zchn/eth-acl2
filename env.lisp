@@ -69,7 +69,7 @@
 
 (defun env/substate (env) (nth 8 env))
 
-(defun env/set-substate (env substate) (update-nth 7 substate env))
+(defun env/set-substate (env substate) (update-nth 8 substate env))
 
 (defun env/validp (env)
   (and (integerp (env/pc env))

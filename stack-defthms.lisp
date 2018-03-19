@@ -4,15 +4,16 @@
 
 (defthm stack/push-io-validp
     (implies (stack/validp s)
-             (stack/validp (stack/push s v)))
-  :rule-classes nil)
+             (stack/validp (stack/push s v))))
 
 (defthm stack/pop-io-validp
     (implies (stack/validp s)
-             (stack/validp (stack/pop s)))
-  :rule-classes nil)
+             (stack/validp (stack/pop s))))
 
 (defthm stack/popn-io-validp
     (implies (stack/validp s)
-             (stack/validp (stack/popn s n)))
-  :rule-classes nil)
+             (stack/validp (stack/popn s n))))
+
+(defthm stack/validp-implies-consp
+    (implies (stack/validp s)
+             (consp s)))
