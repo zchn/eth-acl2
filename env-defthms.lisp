@@ -1,6 +1,8 @@
 (in-package "ACL2")
 
+(include-book "context-defthms")
 (include-book "stack-defthms")
+(include-book "substate-defthms")
 
 (defthm mk-env-op-validp
     (env/validp (mk-env-op anything)))

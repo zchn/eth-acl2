@@ -5,6 +5,7 @@
 (include-book "env")
 (include-book "env-defthms")
 (include-book "exec")
+(include-book "op-exec-defthms")
 
 (defthm env/step-io-pc-validp
     (implies (env/validp e)
