@@ -1,6 +1,7 @@
 (in-package "ACL2")
 
 (include-book "context-defthms")
+(include-book "env")
 (include-book "stack-defthms")
 (include-book "substate-defthms")
 

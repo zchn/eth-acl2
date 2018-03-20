@@ -16,13 +16,14 @@
     (implies (env/validp e)
              (env/validp (env/step e))))
 
+;; The proof checking takes 12000+ seconds.
 (defthm env/exec-hacky-io-pc-validp
     (implies (env/validp e)
              (integerp (env/pc (env/exec-hacky e n)))))
 
-(defthm env/exec-hacky-io-validp
-    (implies (env/validp e)
-             (env/validp (env/exec-hacky e n))))
+;; (defthm env/exec-hacky-io-validp
+;;     (implies (env/validp e)
+;;              (env/validp (env/exec-hacky e n))))
 
 ;; (defthm env/exec-valid-io
 ;;     (implies (env/validp e)
