@@ -11,22 +11,27 @@
   (and (natp n)
        (< n (1- (length stack)))))
 
-(defun stack/validp (stack)
+(defund stack/validp (stack)
   (if (stack/has-n stack 0)
       (and (listp stack)
            (evm-w256p (car stack))
            (stack/validp (cdr stack)))
       (equal stack (mk-empty-stack))))
 
-(defun stack/push (stack v)
+(defund stack/push (stack v)
   (if (evm-w256p v)
       (cons v stack)
       stack))
 
-(defun stack/pop (stack)
+(defund stack/pop (stack)
   (if (equal stack (mk-empty-stack))
       stack
       (cdr stack)))
+
+(defund stack/top (stack)
+  (if (equal stack (mk-empty-stack))
+      0
+      (car stack)))
 
 (defun stack/popn (stack n)
   (if (zp n)
@@ -34,6 +39,4 @@
       (stack/popn (stack/pop stack) (1- n))))
 
 (defun stack/n (stack n)
-  (if (stack/has-n stack n)
-      (car (stack/popn stack n))
-      0))
+  (stack/top (stack/popn stack n)))
