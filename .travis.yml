@@ -6,6 +6,7 @@ cache:
 
 install:
 - mkdir -p $HOME/prog
+- find .
 - bash ./scripts/install-deps.sh
 
 script:
