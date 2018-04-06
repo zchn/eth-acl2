@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-source ./scripts/vars.sh
-
+source ./scripts/vars.sh && \
 if [ -f $RUN_ACL2 ]; then
     echo "Reusing run_acl2:" "$RUN_ACL2"
 else
