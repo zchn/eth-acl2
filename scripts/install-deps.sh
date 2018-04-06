@@ -11,5 +11,5 @@ else
     else
         wget "$ACL2_TARBALL_URL" -O "$ACL2_TARBALL"
     fi
-    tar -x -v -C "$CACHE_DIR" -f "$ACL2_TARBALL"
+    tar -x -C "$CACHE_DIR" -f "$ACL2_TARBALL"
 fi
