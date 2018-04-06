@@ -16,7 +16,7 @@
     (implies (env/validp e)
              (env/validp (env/step e))))
 
-;; ;; The proof checking takes 12000+ seconds.
+;; The proof checking takes 12000+ seconds.
 ;; (defthm env/exec-hacky-io-pc-validp
 ;;     (implies (env/validp e)
 ;;              (integerp (env/pc (env/exec-hacky e n))))

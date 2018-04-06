@@ -4,10 +4,9 @@ cache:
   directories:
     - $HOME/prog
 
-install:
-- mkdir -p $HOME/prog
-- find .
-- bash ./scripts/install-deps.sh
+before_install:
+  - mkdir -p $HOME/prog
 
-script:
-- bash ./scripts/build.sh
+install: ./scripts/install-deps.sh
+
+script: ./scripts/build.sh
