@@ -6,7 +6,7 @@ cache:
 
 install:
 - mkdir -p $HOME/prog
-- ./scripts/install-deps.sh
+- bash ./scripts/install-deps.sh
 
 script:
-- ./scripts/build.sh
+- bash ./scripts/build.sh
