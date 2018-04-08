@@ -5,7 +5,7 @@
 ;; The word size of the machine (and thus size of stack items) is 256-bit. The
 ;; stack has a maximum size of 1024.
 
-(defun mk-empty-stack () (list 'stack-bottom))
+(defund mk-empty-stack () (list 'stack-bottom))
 
 (defun stack/has-n (stack n)
   (and (natp n)
