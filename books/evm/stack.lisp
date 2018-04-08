@@ -7,31 +7,34 @@
 
 (defund mk-empty-stack () (list 'stack-bottom))
 
-(defun stack/has-n (stack n)
-  (and (natp n)
-       (< n (1- (length stack)))))
+;; (defun stack/has-n (stack n)
+;;   (and (natp n)
+;;        (< n (1- (length stack)))))
 
-(defund stack/validp (stack)
-  (if (stack/has-n stack 0)
-      (and (listp stack)
-           (evm-w256p (car stack))
-           (stack/validp (cdr stack)))
-      (equal stack (mk-empty-stack))))
-
-(defund stack/push (stack v)
-  (if (evm-w256p v)
-      (cons v stack)
-      stack))
+(defund stack/top (stack)
+  (if (equal stack (mk-empty-stack))
+      0
+      (car stack)))
 
 (defund stack/pop (stack)
   (if (equal stack (mk-empty-stack))
       stack
       (cdr stack)))
 
-(defund stack/top (stack)
-  (if (equal stack (mk-empty-stack))
-      0
-      (car stack)))
+(defund stack/push (stack v)
+  (if (evm-w256p v)
+      (cons v stack)
+      stack))
+
+(defund stack/validp (stack)
+  (declare (xargs
+            :hints (("Goal"
+                     :in-theory (enable mk-empty-stack stack/top stack/pop)))))
+  (and (listp stack)
+       (> (length stack) 0)
+       (or (equal stack (mk-empty-stack))
+           (and (evm-w256p (stack/top stack))
+                (stack/validp (stack/pop stack))))))
 
 (defun stack/popn (stack n)
   (if (zp n)

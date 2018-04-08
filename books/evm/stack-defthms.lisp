@@ -9,7 +9,7 @@
     (implies (stack/validp s)
              (stack/validp (stack/push s v)))
   :hints (("Goal"
-           :in-theory (enable stack/validp stack/push))))
+           :in-theory (enable stack/push stack/validp stack/top stack/pop mk-empty-stack))))
 
 (defthm stack/pop-io-validp
     (implies (stack/validp s)

@@ -4,7 +4,7 @@
 (include-book "op")
 (include-book "op-exec")
 
-(defun env/step (env)
+(defund env/step (env)
   (if (env/halted env) env
     (if (env/has-nextop env)
         (let ((nextop (env/nextop env)))
