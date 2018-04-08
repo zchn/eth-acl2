@@ -20,13 +20,11 @@
   :hints (("Goal"
            :in-theory (disable env/validp))))
 
-;; (defthm env/exec-hacky-io-validp
-;;     (implies (env/validp e)
-;;              (env/validp (env/exec-hacky e n))))
-
-;; (defthm env/exec-valid-io
-;;     (implies (env/validp e)
-;;              (env/validp (env/exec e))))
+(defthm env/exec-valid-io
+    (implies (env/validp e)
+             (env/validp (env/exec e)))
+  :hints (("Goal"
+           :in-theory (disable env/validp env/exec-hacky))))
 
 ;; ---- Just some experiments ----
 
