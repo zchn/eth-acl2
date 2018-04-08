@@ -13,11 +13,11 @@
   :hints (("Goal" :in-theory (enable env/step))))
 
 
-(defthm env/exec-hacky-io-validp
-    (implies (env/validp e)
-             (env/validp (env/exec-hacky e n)))
-  :hints (("Goal"
-           :in-theory (disable env/validp))))
+(local (defthm env/exec-hacky-io-validp
+           (implies (env/validp e)
+                    (env/validp (env/exec-hacky e n)))
+         :hints (("Goal"
+                  :in-theory (disable env/validp)))))
 
 (defthm env/exec-valid-io
     (implies (env/validp e)
