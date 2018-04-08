@@ -3,6 +3,7 @@
 set -x
 
 source ./scripts/vars.sh && \
+    mkdir -p $CACHE_DIR && \
 if [ -f $RUN_ACL2 ]; then
     echo "Reusing run_acl2:" "$RUN_ACL2"
 else
