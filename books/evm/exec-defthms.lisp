@@ -7,7 +7,6 @@
 (include-book "exec")
 (include-book "op-exec-defthms")
 
-;; The proof checking takes about 10 minutes.
 (defthm env/step-io-validp
     (implies (env/validp e)
              (env/validp (env/step e)))
