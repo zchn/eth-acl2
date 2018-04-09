@@ -1,5 +1,21 @@
 (in-package "ACL2")
 
+(defun mk-block-header (ihc ihs ihi ihd ihl)
+  (list
+   ;; I H c: beneficiary address, COINBASE
+   ihc
+   ;; I H s: timestamp
+   ihs
+   ;; I H i: number
+   ihi
+   ;; I H d: difficulty
+   ihd
+   ;; I H l: gas limit
+   ihl))
+
+(defun mk-dummy-block-header ()
+  (mk-block-header "<beneficiary address>" 0 0 0 0))
+
 ;; Tuple I:
 (defun mk-context (ia io ip id is iv ih ie iw)
   (list
@@ -41,7 +57,12 @@
                                        198704
                                        ;; Iv
                                        0
-                                       198706 198707 198708))
+                                       ;; Ih
+                                       (mk-dummy-block-header)
+                                       ;; Ie
+                                       "<call/create stack height>"
+                                       ;; Iw
+                                       "<permission>"))
 
 (defun address/validp (address) (natp address))
 

@@ -38,7 +38,10 @@ ACL2 !>>(ENV/EXEC (MK-ENV-OP *SIMPLE-STORAGE-CONTRACT*))
  ((64 . 96))
  NIL "Halted: REVERT" 100
  (198700 198701 198702 (19 87)
-         198704 0 198706 198707 198708)
+         198704
+         0 ("<beneficiary address>" 0 0 0 0)
+         "<call/create stack height>"
+         "<permission>")
  (NIL NIL NIL 0))
 ACL2 !>>(ENV/EXEC (MK-ENV-OP *DEED-CONTRACT*))
 (144
@@ -47,13 +50,19 @@ ACL2 !>>(ENV/EXEC (MK-ENV-OP *DEED-CONTRACT*))
  ((64 . 96))
  NIL "Halted: STOP." 100
  (198700 198701 198702 (19 87)
-         198704 0 198706 198707 198708)
+         198704
+         0 ("<beneficiary address>" 0 0 0 0)
+         "<call/create stack height>"
+         "<permission>")
  (NIL NIL NIL 0))
 ACL2 !>>(ENV/EXEC (MK-ENV-OP "6002600301600901"))
 (8 "6002600301600901" (14 STACK-BOTTOM)
    NIL NIL "Halted: pc out of range." 100
    (198700 198701 198702 (19 87)
-           198704 0 198706 198707 198708)
+           198704
+           0 ("<beneficiary address>" 0 0 0 0)
+           "<call/create stack height>"
+           "<permission>")
    (NIL NIL NIL 0))
 ACL2 !>>(ENV/EXEC (MK-ENV-OP *SIMPLE-STORAGE-CREATE*))
 (28
@@ -484,7 +493,10 @@ ACL2 !>>(ENV/EXEC (MK-ENV-OP *SIMPLE-STORAGE-CREATE*))
   (210 . 41))
  100
  (198700 198701 198702 (19 87)
-         198704 0 198706 198707 198708)
+         198704
+         0 ("<beneficiary address>" 0 0 0 0)
+         "<call/create stack height>"
+         "<permission>")
  (NIL NIL NIL 0))
 ACL2 !>>(ENV/EXEC (MK-ENV-OP *SIMPLE-STORAGE-CONTRACT*))
 (78
@@ -493,6 +505,9 @@ ACL2 !>>(ENV/EXEC (MK-ENV-OP *SIMPLE-STORAGE-CONTRACT*))
  ((64 . 96))
  NIL "Halted: REVERT" 100
  (198700 198701 198702 (19 87)
-         198704 0 198706 198707 198708)
+         198704
+         0 ("<beneficiary address>" 0 0 0 0)
+         "<call/create stack height>"
+         "<permission>")
  (NIL NIL NIL 0))
 ACL2 !>>Bye.
