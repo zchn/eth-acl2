@@ -5,6 +5,45 @@ import textwrap
 
 from pprint import pprint
 
+def make_storage_update(storage_update, content):
+    storage_update_template = textwrap.dedent('''
+       (env/storage/store {src_env}
+                          {offset}
+                          {value})''')
+    for offset,value in content['storage'].items():
+        storage_update = storage_update_template.format(
+            src_env=textwrap.indent(storage_update, '  '),
+            offset=int(offset, base=16),
+            value=int(value, base=16))
+
+    pprint(content['balance'])
+    pprint(content['code'])
+    pprint(content['nonce'])
+
+    return storage_update
+
+def make_pre_or_post(defun_name, my_address, pre_post_details):
+
+    storage_update = '(mk-initial-env)'
+    for address, content in pre_post_details.items():
+        if int(address, base=16) != int(my_address, base=16):
+            print('non-self address is not supported:')
+            pprint(address)
+            pprint(content)
+            continue
+        storage_update = make_storage_update(storage_update,
+                                                     content)
+
+    defun_template = textwrap.dedent('''
+        (defun {defun_name} ()
+          {updates})''')
+
+    defun = defun_template.format(
+        defun_name=defun_name,
+        updates=textwrap.indent(storage_update, '  '))
+
+    return defun
+
 def main():
     parser = argparse.ArgumentParser(
         description='Generate an eth-acl2 stub from a json VMTest file.')
@@ -118,17 +157,41 @@ def main():
             substate=textwrap.indent(mk_substate, '  '))
 
 
-        print(mk_env)
+        defun = "(defun mk-initial-env () {mk_env})".format(
+            mk_env=textwrap.indent(mk_env, '  '))
 
-        pprint(details['pre'])
-        print('='*80)
+        defpre = make_pre_or_post('env-with-pre',
+                                  details['exec']['address'],
+                                  details['pre'])
+
+        defpost = make_pre_or_post('env-with-post',
+                                  details['exec']['address'],
+                                  details['post'])
+
+        file_template = textwrap.dedent('''
+            (include-book "env")
+            (include-book "exec")
+
+            {init_env}
+            {defpre}
+            {defpost}
+            (thm (equal (env/exec (env-with-pre)) (env-with-post)))''')
+
+        file_content = file_template.format(
+            init_env=defun,
+            defpre=defpre,
+            defpost=defpost)
+
+        outfile = open('tmp/'+test_name+'.lisp', 'w')
+        outfile.write(file_content)
+
+        print(file_content)
+
         pprint(details['gas'])
         print('-'*80)
         pprint(details['logs'])
         print('-'*80)
         pprint(details['out'])
-        print('-'*80)
-        pprint(details['post'])
         print('-'*80)
         pprint(details['callcreates'])
 
