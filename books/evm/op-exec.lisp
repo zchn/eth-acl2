@@ -3,6 +3,7 @@
 (include-book "std/strings/top" :dir :system)
 (include-book "std/strings/pretty" :dir :system)
 
+(include-book "base")
 (include-book "env")
 
 (defun exec-stop (env)
@@ -13,7 +14,7 @@
   (let* ((stack (env/stack env))
          (op0 (stack/n stack 0))
          (op1 (stack/n stack 1))
-         (new-stack (stack/push (stack/popn stack 2) (+ op0 op1)))
+         (new-stack (stack/push (stack/popn stack 2) (fix-w256 (+ op0 op1))))
          (tmp-env (env/set-stack env new-stack))
          (new-env (env/pc++ tmp-env)))
     new-env))

@@ -3,6 +3,8 @@
 (include-book "exec")
 (include-book "exec-defthms")
 
+(include-book "test/testall")
+
 (env/exec (mk-env-op *simple-storage-contract*))
 
 (env/exec (mk-env-op *deed-contract*))

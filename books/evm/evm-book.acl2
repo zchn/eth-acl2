@@ -9,4 +9,5 @@
 (include-book "env")
 (include-book "exec")
 (include-book "exec-defthms")
+(include-book "test/testall")
 ||#
