@@ -49,7 +49,28 @@
   (env/set-mem env
                (memory/store-byte-array (env/mem env) addr array)))
 
-(defun env/storage (env) (nth 4 env))
+(defun env/context (env) (nth 7 env))
+
+(defun env/context/Ia (env) (context/Is (env/context env)))
+
+(defun env/context/Is (env) (context/Is (env/context env)))
+
+(defun env/context/Iv (env) (context/Iv (env/context env)))
+
+(defun env/set-context (env context) (update-nth 7 context env))
+
+(local (defun env/storage (env) (nth 4 env))
+       (defun env/set-storage (env storage) (update-nth 4 storage env)))
+
+(defun env/storage/load (env offset)
+  (storage/load (env/storage env) (env/context/Ia env) offset))
+
+(defun env/storage/store (env offset value)
+  (env/set-storage
+   env (storage/store (env/storage env)
+                      (env/context/Ia env)
+                      offset
+                      value)))
 
 (defun env/halted (env) (nth 5 env))
 
@@ -58,14 +79,6 @@
 (defun env/gas (env) (nth 6 env))
 
 (defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
-
-(defun env/context (env) (nth 7 env))
-
-(defun env/context/Is (env) (context/Is (env/context env)))
-
-(defun env/context/Iv (env) (context/Iv (env/context env)))
-
-(defun env/set-context (env context) (update-nth 7 context env))
 
 (defun env/substate (env) (nth 8 env))
 

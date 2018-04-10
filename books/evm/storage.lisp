@@ -4,8 +4,16 @@
 ;; concept to the memory but rather than a byte array, it is a word-
 ;; addressable word array.
 
-;; (include-book "std/alists/top" :dir :system)
+(include-book "std/alists/top" :dir :system)
+
+;; Type of a storage: ContractAddress => (WordOffset => WordValue)
 
 (defun mk-empty-storage () nil)
 
 (defun storage/validp (storage) (listp storage))
+
+(defun storage/load (storage address offset)
+  (fix (nth offset (hons-get address storage))))
+
+(defun storage/store (storage address offset value)
+  (hons-acons address (update-nth offset (fix value) (hons-get address storage))))

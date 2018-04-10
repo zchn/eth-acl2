@@ -52,6 +52,10 @@
 
 (defun op/mstorep (op) (equal op "52"))
 
+(defun op/sload (op) (equal op "54"))
+
+(defun op/sstore (op) (equal op "55"))
+
 (defun op/jumpp (op) (equal op "56"))
 
 (defun op/jumpip (op) (equal op "57"))

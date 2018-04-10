@@ -68,6 +68,8 @@
 
 (defun wei/validp (wei) (natp wei))
 
+(defun context/Ia (context) (nth 0 context))
+
 (defun context/Id (context) (nth 3 context))
 
 (defun context/Is (context) (nth 4 context))
