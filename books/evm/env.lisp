@@ -59,8 +59,9 @@
 
 (defun env/set-context (env context) (update-nth 7 context env))
 
-(local (defun env/storage (env) (nth 4 env))
-       (defun env/set-storage (env storage) (update-nth 4 storage env)))
+(defun env/storage (env) (nth 4 env))
+
+(defun env/set-storage (env storage) (update-nth 4 storage env))
 
 (defun env/storage/load (env offset)
   (storage/load (env/storage env) (env/context/Ia env) offset))

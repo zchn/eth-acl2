@@ -10,10 +10,15 @@
 
 (defun mk-empty-storage () nil)
 
-(defun storage/validp (storage) (listp storage))
+(defun storage/validp (storage)
+  ;; TODO(zchn): implement correct validp for storage.
+  (declare (ignore storage))
+  t)
 
 (defun storage/load (storage address offset)
   (fix (nth offset (hons-get address storage))))
 
 (defun storage/store (storage address offset value)
-  (hons-acons address (update-nth offset (fix value) (hons-get address storage))))
+  (hons-acons address
+              (update-nth offset (fix value) (hons-get address storage))
+              storage))
