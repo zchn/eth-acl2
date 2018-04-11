@@ -36,7 +36,15 @@
 
 (defun env/stack (env) (nth 2 env))
 
+(defun env/stack/n (env n) (stack/n (env/stack env) n))
+
 (defun env/set-stack (env stack) (update-nth 2 stack env))
+
+(defun env/stack/popn (env n)
+  (env/set-stack env (stack/popn (env/stack env) n)))
+
+(defun env/stack/push (env val)
+  (env/set-stack env (stack/push (env/stack env) val)))
 
 (defun env/mem (env) (nth 3 env))
 
