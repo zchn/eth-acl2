@@ -4,13 +4,13 @@
 (include-book "../env")
 (include-book "../exec")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-add1 ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "60047fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -65,14 +65,14 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-add1 ()
+    (mk-initial-env-add1))
 
-(defun env-with-post-add0 ()
+(defun env-with-post-add1 ()
   
-  (env/storage/store   (mk-initial-env-add0)
+  (env/storage/store   (mk-initial-env-add1)
                      0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934))
-(defthm storage-equiv-add0
-  (alist-equiv (env/storage (env/exec (env-with-pre-add0)))
-               (env/storage (env-with-post-add0))))
+                     3))
+(defthm storage-equiv-add1
+  (alist-equiv (env/storage (env/exec (env-with-pre-add1)))
+               (env/storage (env-with-post-add1))))

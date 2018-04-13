@@ -22,9 +22,9 @@ def make_storage_update(storage_update, content):
 
     return storage_update
 
-def make_pre_or_post(defun_name, my_address, pre_post_details):
+def make_pre_or_post(test_name, defun_name, my_address, pre_post_details):
 
-    storage_update = '(mk-initial-env)'
+    storage_update = '(mk-initial-env-{})'.format(test_name)
     for address, content in pre_post_details.items():
         if int(address, base=16) != int(my_address, base=16):
             print('non-self address is not supported:')
@@ -157,14 +157,17 @@ def main():
             substate=textwrap.indent(mk_substate, '  '))
 
 
-        defun = "(defun mk-initial-env ()\n{mk_env})".format(
+        defun = "(defun mk-initial-env-{test_name} ()\n{mk_env})".format(
+            test_name=test_name,
             mk_env=textwrap.indent(mk_env, '  '))
 
-        defpre = make_pre_or_post('env-with-pre',
+        defpre = make_pre_or_post(test_name,
+                                  'env-with-pre-{}'.format(test_name),
                                   details['exec']['address'],
                                   details['pre'])
 
-        defpost = make_pre_or_post('env-with-post',
+        defpost = make_pre_or_post(test_name,
+                                   'env-with-post-{}'.format(test_name),
                                   details['exec']['address'],
                                   details['post'])
 
@@ -177,11 +180,12 @@ def main():
             {init_env}
             {defpre}
             {defpost}
-            (defthm storage-equiv
-              (alist-equiv (env/storage (env/exec (env-with-pre)))
-                           (env/storage (env-with-post))))''')
+            (defthm storage-equiv-{test_name}
+              (alist-equiv (env/storage (env/exec (env-with-pre-{test_name})))
+                           (env/storage (env-with-post-{test_name}))))''')
 
         file_content = file_template.format(
+            test_name=test_name,
             init_env=defun,
             defpre=defpre,
             defpost=defpost)
