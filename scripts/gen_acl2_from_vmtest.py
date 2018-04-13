@@ -157,7 +157,7 @@ def main():
             substate=textwrap.indent(mk_substate, '  '))
 
 
-        defun = "(defun mk-initial-env () {mk_env})".format(
+        defun = "(defun mk-initial-env ()\n{mk_env})".format(
             mk_env=textwrap.indent(mk_env, '  '))
 
         defpre = make_pre_or_post('env-with-pre',
@@ -169,13 +169,17 @@ def main():
                                   details['post'])
 
         file_template = textwrap.dedent('''
-            (include-book "env")
-            (include-book "exec")
+            (in-package "ACL2")
+
+            (include-book "../env")
+            (include-book "../exec")
 
             {init_env}
             {defpre}
             {defpost}
-            (thm (equal (env/exec (env-with-pre)) (env-with-post)))''')
+            (defthm storage-equiv
+              (alist-equiv (env/storage (env/exec (env-with-pre)))
+                           (env/storage (env-with-post))))''')
 
         file_content = file_template.format(
             init_env=defun,

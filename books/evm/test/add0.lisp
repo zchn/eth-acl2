@@ -1,9 +1,11 @@
+
 (in-package "ACL2")
 
 (include-book "../env")
 (include-book "../exec")
 
 (defun mk-initial-env ()
+
   (mk-env
     ;; pc
     0
@@ -20,7 +22,7 @@
     ;; gas
     100000
     ;; context
-
+  
     (mk-context
       ;; ia
       87579061662017136990230301793909925042452127430
@@ -35,7 +37,7 @@
       ;; iv
       1000000000000000000
       ;; ih
-
+  
       (mk-block-header
         ;; ihc
         244687034288125203496486448490407391986876152250
@@ -52,7 +54,7 @@
       ;; iw
       "<permission>")
     ;; substate
-
+  
     (mk-substate
       ;; suiside
       nil
@@ -67,8 +69,10 @@
     (mk-initial-env))
 
 (defun env-with-post ()
-
+  
   (env/storage/store   (mk-initial-env)
                      0
                      115792089237316195423570985008687907853269984665640564039457584007913129639934))
-(defthm storage-equiv (alist-equiv (env/storage (env/exec (env-with-pre))) (env/storage (env-with-post))))
+(defthm storage-equiv
+  (alist-equiv (env/storage (env/exec (env-with-pre)))
+               (env/storage (env-with-post))))
