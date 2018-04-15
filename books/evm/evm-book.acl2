@@ -5,9 +5,8 @@
 ; Help dependency scanner.
 #||
 (depends-on "evm-log.txt")
-(include-book "contracts")
-(include-book "env")
-(include-book "exec")
 (include-book "exec-defthms")
+(include-book "contracts/execs")
+(include-book "contracts/proveall")
 (include-book "test/testall")
 ||#

@@ -1,15 +1,4 @@
-(include-book "contracts")
-(include-book "env")
-(include-book "exec")
 (include-book "exec-defthms")
-
+(include-book "contracts/execs")
+(include-book "contracts/proveall")
 (include-book "test/testall")
-
-(env/exec (mk-env-op *simple-storage-contract*))
-
-(env/exec (mk-env-op *deed-contract*))
-
-(env/exec (mk-env-op "6002600301600901"))
-
-(env/exec (mk-env-op *simple-storage-create*))
-(env/exec (mk-env-op *simple-storage-contract*))
