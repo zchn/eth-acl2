@@ -85,6 +85,22 @@
 
 (defun env/set-halted (env halted) (update-nth 5 halted env))
 
+(defun env/halted/validp (env)
+  (let ((halted (env/halted env)))
+    ;; The normal halting function is defined
+    ;; H(mu, I) =
+    ;;    * H_return(mu), if it's a RETURN
+    ;;    * (), if it's a STOP or SELFDESTRUCT
+    ;;    * empty, otherwise
+    (or (not halted)
+        (and (consp halted)
+             (member-equal (car halted) (list 'out-of-range
+                                              'return
+                                              'revert
+                                              'stop
+                                              'selfdestruct
+                                              'unknown))))))
+
 (defun env/gas (env) (nth 6 env))
 
 (defun env/gas-- (env) (update-nth 6 (1- (env/gas env)) env))
@@ -99,7 +115,7 @@
        (stack/validp (env/stack env))
        (memory/validp (env/mem env))
        (storage/validp (env/storage env))
-       t ;; (halted/validp (env/halted env))
+       (env/halted/validp env)
        (natp (env/gas env)) ;; (gas/validp (env/gas env))
        (context/validp (env/context env))
        (substate/validp (env/substate env))))

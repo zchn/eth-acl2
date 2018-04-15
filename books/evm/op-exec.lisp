@@ -7,7 +7,7 @@
 (include-book "env")
 
 (defun exec-stop (env)
-  (let ((tmp-env (env/set-halted env "Halted: STOP.")))
+  (let ((tmp-env (env/set-halted env (cons 'stop "Halted: STOP."))))
     (env/pc++ tmp-env)))
 
 (defun exec-add (env)
@@ -229,7 +229,7 @@
   (let* (;; TODO(zchn): calculate the correct gas consumption.
          (popped-env (env/stack/popn env 2))
          (reverted-env (env/set-substate popped-env (mk-empty-substate)))
-         (halted-env (env/set-halted reverted-env "Halted: REVERT"))
+         (halted-env (env/set-halted reverted-env (cons 'revert "Halted: REVERT")))
          (new-env (env/pc++ halted-env)))
     new-env))
 
@@ -238,14 +238,14 @@
          (mem-len (env/stack/n env 1))
          (popped-env (env/stack/popn env 2))
          (halted-env (env/set-halted popped-env
-                                     (env/mem/load-byte-array popped-env
-                                                              mem-start
-                                                              mem-len)))
+                                     (cons 'return (env/mem/load-byte-array popped-env
+                                                                            mem-start
+                                                                            mem-len))))
          (new-env (env/pc++ halted-env)))
     new-env))
 
 (defun exec-unknown (env)
   (let ((tmp-env
-          (env/set-halted env (str::cat "Halted: unknown OP:"
-                                        (str::pretty (env/nextop env))))))
+          (env/set-halted env (cons 'unknown (str::cat "Halted: unknown OP:"
+                                                       (str::pretty (env/nextop env)))))))
     (env/pc++ tmp-env)))
