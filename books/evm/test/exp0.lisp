@@ -3,6 +3,7 @@
 
 (include-book "../env")
 (include-book "../exec")
+(include-book "helper")
 
 (defun mk-initial-env-exp0 ()
 
@@ -31,7 +32,7 @@
       ;; ip
       100000000000000
       ;; id
-      "0x"
+      nil
       ;; is
       1170859069521887415590932569929099639409724315265
       ;; iv
@@ -69,10 +70,11 @@
     (mk-initial-env-exp0))
 
 (defun env-with-post-exp0 ()
-  
+    (env/set-halted 
   (env/storage/store   (mk-initial-env-exp0)
                      0
-                     4))
-(defthm storage-equiv-exp0
-  (alist-equiv (env/storage (env/exec (env-with-pre-exp0)))
-               (env/storage (env-with-post-exp0))))
+                     4) (cons 'out-of-range "Halted: pc out of range.")))
+
+(defthm expect-exp0
+  (expected-env-p (env/exec (env-with-pre-exp0))
+                  (env-with-post-exp0)))

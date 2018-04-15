@@ -16,6 +16,10 @@
 (defun mk-dummy-block-header ()
   (mk-block-header "<beneficiary address>" 0 0 0 0))
 
+(defun block-header/validp (bh)
+  (and (listp bh)
+       (equal (length bh) 5)))
+
 ;; Tuple I:
 (defun mk-context (ia io ip id is iv ih ie iw)
   (list
@@ -76,9 +80,12 @@
 
 (defun context/Iv (context) (nth 5 context))
 
+(defun context/Ih (context) (nth 6 context))
+
 (defun context/validp (context)
   (and (listp context)
        (equal (length context) 9)
        (listp (context/Id context))
        (address/validp (context/Is context))
-       (wei/validp (context/Iv context))))
+       (wei/validp (context/Iv context))
+       (block-header/validp (context/Ih context))))

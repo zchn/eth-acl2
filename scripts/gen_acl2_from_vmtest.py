@@ -23,8 +23,12 @@ def make_storage_update(storage_update, content):
     return storage_update
 
 def make_halt_update(src_env, out_string):
-    if not out_string or out_string == '0x':
+    if out_string is None:
         return src_env
+    if out_string == '0x':
+        return ('(env/set-halted {src_env} '
+                '(cons \'out-of-range "Halted: pc out of range."))'
+                .format(src_env=src_env))
     if out_string.startswith('0x'):
         out_string = out_string[2:]
     halt_update_temlate = textwrap.dedent('''
@@ -128,11 +132,12 @@ def main():
                {ie}
               ;; iw
               {iw})''')
+        assert(details['exec']['data'] == '0x')
         mk_context = mk_context_template.format(
             ia=int(details['exec']['address'], base=16),
             io=int(details['exec']['origin'], base=16),
             ip=int(details['exec']['gasPrice'], base=16),
-            id_='"' + details['exec']['data'] + '"',
+            id_='nil',
             is_=int(details['exec']['caller'], base=16),
             iv=int(details['exec']['value'], base=16),
             ih=textwrap.indent(mk_block_header, '  '),
@@ -202,7 +207,7 @@ def main():
 
             (defthm expect-{test_name}
               (expected-env-p (env/exec (env-with-pre-{test_name}))
-                              env-with-post-{test_name}))''')
+                              (env-with-post-{test_name})))''')
 
         file_content = file_template.format(
             test_name=test_name,

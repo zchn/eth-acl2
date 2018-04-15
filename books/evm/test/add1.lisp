@@ -32,7 +32,7 @@
       ;; ip
       100000000000000
       ;; id
-      "0x"
+      nil
       ;; is
       1170859069521887415590932569929099639409724315265
       ;; iv
@@ -70,11 +70,11 @@
     (mk-initial-env-add1))
 
 (defun env-with-post-add1 ()
-  
+    (env/set-halted 
   (env/storage/store   (mk-initial-env-add1)
                      0
-                     3))
+                     3) (cons 'out-of-range "Halted: pc out of range.")))
 
 (defthm expect-add1
   (expected-env-p (env/exec (env-with-pre-add1))
-                  env-with-post-add1))
+                  (env-with-post-add1)))

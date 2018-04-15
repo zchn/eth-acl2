@@ -32,7 +32,7 @@
       ;; ip
       100000000000000
       ;; id
-      "0x"
+      nil
       ;; is
       1170859069521887415590932569929099639409724315265
       ;; iv
@@ -76,4 +76,4 @@
 
 (defthm expect-fibbonacci_unrolled
   (expected-env-p (env/exec (env-with-pre-fibbonacci_unrolled))
-                  env-with-post-fibbonacci_unrolled))
+                  (env-with-post-fibbonacci_unrolled)))
