@@ -22,7 +22,23 @@ def make_storage_update(storage_update, content):
 
     return storage_update
 
-def make_pre_or_post(test_name, defun_name, my_address, pre_post_details):
+def make_halt_update(src_env, out_string):
+    if not out_string or out_string == '0x':
+        return src_env
+    if out_string.startswith('0x'):
+        out_string = out_string[2:]
+    halt_update_temlate = textwrap.dedent('''
+        (env/set-halted {src_env}
+                        (cons 'return {out_list}))''')
+    out_list_elems = ['list']
+    for i in range(int(len(out_string)/2)):
+        out_list_elems.append('#x'+out_string[i*2:i*2+2])
+    halt_update = halt_update_temlate.format(
+        src_env=textwrap.indent(src_env, '  '),
+        out_list='(' + ' '.join(out_list_elems) + ')')
+    return halt_update
+
+def make_pre_or_post(test_name, defun_name, my_address, pre_post_details, out_string):
 
     storage_update = '(mk-initial-env-{})'.format(test_name)
     for address, content in pre_post_details.items():
@@ -34,13 +50,15 @@ def make_pre_or_post(test_name, defun_name, my_address, pre_post_details):
         storage_update = make_storage_update(storage_update,
                                                      content)
 
+    updates = make_halt_update(storage_update, out_string)
+
     defun_template = textwrap.dedent('''
         (defun {defun_name} ()
           {updates})''')
 
     defun = defun_template.format(
         defun_name=defun_name,
-        updates=textwrap.indent(storage_update, '  '))
+        updates=textwrap.indent(updates, '  '))
 
     return defun
 
@@ -164,25 +182,27 @@ def main():
         defpre = make_pre_or_post(test_name,
                                   'env-with-pre-{}'.format(test_name),
                                   details['exec']['address'],
-                                  details['pre'])
+                                  details['pre'], None)
 
         defpost = make_pre_or_post(test_name,
                                    'env-with-post-{}'.format(test_name),
-                                  details['exec']['address'],
-                                  details['post'])
+                                   details['exec']['address'],
+                                   details['post'], details['out'])
 
         file_template = textwrap.dedent('''
             (in-package "ACL2")
 
             (include-book "../env")
             (include-book "../exec")
+            (include-book "helper")
 
             {init_env}
             {defpre}
             {defpost}
-            (defthm storage-equiv-{test_name}
-              (alist-equiv (env/storage (env/exec (env-with-pre-{test_name})))
-                           (env/storage (env-with-post-{test_name}))))''')
+
+            (defthm expect-{test_name}
+              (expected-env-p (env/exec (env-with-pre-{test_name}))
+                              env-with-post-{test_name}))''')
 
         file_content = file_template.format(
             test_name=test_name,
@@ -198,8 +218,6 @@ def main():
         pprint(details['gas'])
         print('-'*80)
         pprint(details['logs'])
-        print('-'*80)
-        pprint(details['out'])
         print('-'*80)
         pprint(details['callcreates'])
 

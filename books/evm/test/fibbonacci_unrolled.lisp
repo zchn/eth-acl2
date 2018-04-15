@@ -3,6 +3,7 @@
 
 (include-book "../env")
 (include-book "../exec")
+(include-book "helper")
 
 (defun mk-initial-env-fibbonacci_unrolled ()
 
@@ -69,7 +70,10 @@
     (mk-initial-env-fibbonacci_unrolled))
 
 (defun env-with-post-fibbonacci_unrolled ()
-    (mk-initial-env-fibbonacci_unrolled))
-(defthm storage-equiv-fibbonacci_unrolled
-  (alist-equiv (env/storage (env/exec (env-with-pre-fibbonacci_unrolled)))
-               (env/storage (env-with-post-fibbonacci_unrolled))))
+  
+  (env/set-halted   (mk-initial-env-fibbonacci_unrolled)
+                  (cons 'return (list #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x00 #x10 #x55))))
+
+(defthm expect-fibbonacci_unrolled
+  (expected-env-p (env/exec (env-with-pre-fibbonacci_unrolled))
+                  env-with-post-fibbonacci_unrolled))

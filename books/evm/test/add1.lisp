@@ -3,6 +3,7 @@
 
 (include-book "../env")
 (include-book "../exec")
+(include-book "helper")
 
 (defun mk-initial-env-add1 ()
 
@@ -73,6 +74,7 @@
   (env/storage/store   (mk-initial-env-add1)
                      0
                      3))
-(defthm storage-equiv-add1
-  (alist-equiv (env/storage (env/exec (env-with-pre-add1)))
-               (env/storage (env-with-post-add1))))
+
+(defthm expect-add1
+  (expected-env-p (env/exec (env-with-pre-add1))
+                  env-with-post-add1))

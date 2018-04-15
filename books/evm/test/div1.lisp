@@ -3,6 +3,7 @@
 
 (include-book "../env")
 (include-book "../exec")
+(include-book "helper")
 
 (defun mk-initial-env-div1 ()
 
@@ -69,7 +70,10 @@
     (mk-initial-env-div1))
 
 (defun env-with-post-div1 ()
-    (mk-initial-env-div1))
-(defthm storage-equiv-div1
-  (alist-equiv (env/storage (env/exec (env-with-pre-div1)))
-               (env/storage (env-with-post-div1))))
+  
+  (env/set-halted   (mk-initial-env-div1)
+                  (cons 'return (list #x7f #x6e #x5d #x4c #x3b #x2a #x19 #x08 #x7f #x6e #x5d #x4c #x3b #x2a #x19 #x08 #x7f #x6e #x5d #x4c #x3b #x2a #x19 #x08 #x7f #x6e #x5d #x4c #x3b #x2a #x19 #x08))))
+
+(defthm expect-div1
+  (expected-env-p (env/exec (env-with-pre-div1))
+                  env-with-post-div1))
