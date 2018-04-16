@@ -5,13 +5,13 @@
        (<= n 256)))
 
 (defun fix-byte (n)
-  (mod (fix n) 256))
+  (mod (nfix n) 256))
 
 (defun evm-w256p (n)
   (integerp n))
 
 (defun fix-w256 (n)
-  (mod (fix n) (expt 2 256)))
+  (mod (nfix n) (expt 2 256)))
 
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)

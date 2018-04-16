@@ -5,6 +5,9 @@
 (defthm stack/empty-validp
   (stack/validp (list 'stack-bottom)))
 
+(defthm stack/mk-empty-stack-validp
+    (stack/validp (mk-empty-stack)))
+
 (defthm stack/push-io-validp
     (implies (stack/validp s)
              (stack/validp (stack/push s v)))
