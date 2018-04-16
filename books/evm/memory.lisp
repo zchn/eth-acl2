@@ -1,27 +1,43 @@
 (in-package "ACL2")
 
-(include-book "std/alists/top" :dir :system)
+(include-book "std/lists/top" :dir :system)
+
+(include-book "base")
 
 ;; The memory model is a simple word-addressed byte array.
 
 (defun mk-empty-memory () nil)
 
-(defun memory/validp (memory) (listp memory))
+(defun memory/validp (memory)
+  (or (not memory)
+      (and (consp memory)
+           (evm-bytep (car memory))
+           (memory/validp (cdr memory)))))
 
-(defun memory/load (memory addr)
-  (assoc addr memory))
+(defun memory/load-byte (memory addr)
+  (nth addr memory))
 
 (defun memory/load-byte-array (memory mem-start mem-len)
   (if (zp mem-len) nil
-    (cons (memory/load memory mem-start)
+    (cons (memory/load-byte memory mem-start)
           (memory/load-byte-array memory (1+ mem-start) (1- mem-len)))))
 
-(defun memory/store (memory addr value)
-  (put-assoc addr value memory))
+(defun memory/load-w256 (memory addr)
+  (w-from-bytes (memory/load-byte-array memory addr 32)))
+
+(defun memory/zero-extend (memory mem-len)
+  (append memory (repeat (nfix mem-len) 0)))
+
+(defun memory/store-byte (memory addr value)
+  (update-nth addr (fix-byte value)
+              (memory/zero-extend memory (1+ (- addr (length memory))))))
 
 (defun memory/store-byte-array (memory addr array)
   (if (consp array)
-      (memory/store-byte-array (memory/store memory addr (car array))
+      (memory/store-byte-array (memory/store-byte memory addr (car array))
                                (1+ addr)
                                (cdr array))
     memory))
+
+(defun memory/store-w256 (memory addr value)
+  (memory/store-byte-array memory addr (w-to-bytes value 32)))

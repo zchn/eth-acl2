@@ -31,8 +31,8 @@
 
 (defun env/rom (env) (nth 1 env))
 
-(defun env/rom/n-byte-array (env n)
-  (rom/n-byte-array (env/rom env) n))
+(defun env/rom/byte-list-nthcdr (env n)
+  (rom/byte-list-nthcdr (env/rom env) n))
 
 (defun env/stack (env) (nth 2 env))
 
@@ -48,14 +48,25 @@
 
 (defun env/mem (env) (nth 3 env))
 
+(defun env/mem/load-w256 (env addr)
+  (memory/load-w256 (env/mem env) addr))
+
 (defun env/mem/load-byte-array (env mem-start mem-len)
   (memory/load-byte-array (env/mem env) mem-start mem-len))
 
 (defun env/set-mem (env memory) (update-nth 3 memory env))
 
+(defun env/mem/store-byte (env addr value)
+  (env/set-mem env
+               (memory/store-byte (env/mem env) addr value)))
+
 (defun env/mem/store-byte-array (env addr array)
   (env/set-mem env
                (memory/store-byte-array (env/mem env) addr array)))
+
+(defun env/mem/store-w256 (env addr value)
+  (env/set-mem env
+               (memory/store-w256 (env/mem env) addr value)))
 
 (defun env/context (env) (nth 7 env))
 

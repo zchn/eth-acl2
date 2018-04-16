@@ -50,7 +50,11 @@
 
 ;; (defun op/popp (op) (equal op "50"))
 
+(defun op/mloadp (op) (equal op "51"))
+
 (defun op/mstorep (op) (equal op "52"))
+
+(defun op/mstore8p (op) (equal op "53"))
 
 (defun op/sloadp (op) (equal op "54"))
 

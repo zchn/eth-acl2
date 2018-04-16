@@ -135,7 +135,7 @@
          (memmed-env
            (env/mem/store-byte-array
             popped-env mem-start
-            (env/rom/n-byte-array popped-env rom-start)))
+            (env/rom/byte-list-nthcdr popped-env rom-start)))
          (new-env (env/pc++ memmed-env)))
     new-env))
 
@@ -162,13 +162,26 @@
 (defun exec-dup1 (env) (exec-dup-helper env 1))
 (defun exec-dup2 (env) (exec-dup-helper env 2))
 
+(defun exec-mload (env)
+  (let* ((mem-addr (env/stack/n env 0))
+         (tmp-env (env/stack/popn env 1))
+         (tmp2-env (env/stack/push tmp-env (env/mem/load-w256 tmp-env mem-addr)))
+         (new-env (env/pc++ tmp2-env)))
+    new-env))
+
 (defun exec-mstore (env)
   (let* ((mem-addr (env/stack/n env 0))
          (value (env/stack/n env 1))
          (tmp-env (env/stack/popn env 2))
-         (mem (env/mem env))
-         (new-mem (memory/store mem mem-addr value))
-         (tmp2-env (env/set-mem tmp-env new-mem))
+         (tmp2-env (env/mem/store-w256 tmp-env mem-addr value))
+         (new-env (env/pc++ tmp2-env)))
+    new-env))
+
+(defun exec-mstore8 (env)
+  (let* ((mem-addr (env/stack/n env 0))
+         (value (env/stack/n env 1))
+         (tmp-env (env/stack/popn env 2))
+         (tmp2-env (env/mem/store-byte tmp-env mem-addr value))
          (new-env (env/pc++ tmp2-env)))
     new-env))
 
