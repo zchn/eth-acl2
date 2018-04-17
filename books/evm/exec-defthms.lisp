@@ -5,6 +5,7 @@
 (include-book "env")
 (include-book "env-defthms")
 (include-book "exec")
+(include-book "memory-defthms")
 (include-book "op-exec-defthms")
 
 (defthm env/step-io-validp
