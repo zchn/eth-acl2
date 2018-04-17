@@ -2,13 +2,14 @@
 
 (defun evm-bytep (n)
   (and (natp n)
-       (<= n 256)))
+       (< n 256)))
 
 (defun fix-byte (n)
   (mod (nfix n) 256))
 
 (defun evm-w256p (n)
-  (integerp n))
+  (and (natp n)
+       (< n (expt 2 256))))
 
 (defun fix-w256 (n)
   (mod (nfix n) (expt 2 256)))

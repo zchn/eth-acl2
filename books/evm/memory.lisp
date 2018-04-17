@@ -15,7 +15,7 @@
            (memory/validp (cdr memory)))))
 
 (defund memory/load-byte (memory addr)
-  (nth (fix-w256 addr) memory))
+  (fix-byte (nth (fix-w256 addr) memory)))
 
 (defun memory/load-byte-array (memory mem-start mem-len)
   (if (zp mem-len) nil
@@ -29,8 +29,8 @@
   (append memory (repeat (nfix mem-len) 0)))
 
 (defund memory/store-byte (memory addr value)
-  (update-nth addr (fix-byte value)
-              (memory/zero-extend memory (1+ (- addr (length memory))))))
+  (update-nth (fix-w256 addr) (fix-byte value)
+              (memory/zero-extend memory (1+ (- (fix-w256 addr) (length memory))))))
 
 (defun memory/store-byte-array (memory addr array)
   (if (consp array)
