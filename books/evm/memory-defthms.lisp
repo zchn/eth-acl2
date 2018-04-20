@@ -1,6 +1,5 @@
 (in-package "ACL2")
 
-
 (include-book "base-defthms")
 
 (include-book "memory")
@@ -23,8 +22,7 @@
     (implies (memory/validp m)
              (memory/validp (memory/store-byte m addr val)))
   :hints (("Goal"
-           :in-theory (e/d (memory/validp
-                            memory/store-byte)
+           :in-theory (e/d (memory/validp memory/store-byte)
                            (evm-bytep fix-byte evm-w256p fix-w256)))))
 
 ;; (defthm memory-store-byte-array-validp
