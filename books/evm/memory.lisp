@@ -8,8 +8,9 @@
 
 (defund mk-empty-memory () nil)
 
-(defund memory/validp (memory)
+(defun memory/validp (memory)
   (and (true-listp memory)
+       (<= (len memory) (expt 2 256))
        (or (not memory)
            (and (consp memory)
                 (evm-bytep (car memory))
