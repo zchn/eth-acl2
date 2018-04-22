@@ -7,7 +7,7 @@
 (defun fix-byte (n)
   (let ((n-fixed (nfix n)))
     (if (zp n-fixed) 0
-        (if (< n-fixed 256) n-fixed 0))))
+        (if (< n-fixed 256) n-fixed 255))))
 
 (defun evm-w256p (n)
   (and (natp n)
@@ -16,7 +16,7 @@
 (defun fix-w256 (n)
   (let ((n-fixed (nfix n)))
     (if (zp n-fixed) 0
-        (if (< n-fixed (expt 2 256)) n-fixed 0))))
+        (if (< n-fixed (expt 2 256)) n-fixed (1- (expt 2 256))))))
 
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)
