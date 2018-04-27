@@ -12,3 +12,8 @@
 
 (defthm fix-w256-lt-2-256
     (<= (fix-w256 n) 115792089237316195423570985008687907853269984665640564039457584007913129639936))
+
+;; TODO(zchn): Prove the follow defthm.
+;; (defthm w-from-bytes-lt-expt-256-len
+;;     (implies (consp byte-array)
+;;              (< (w-from-bytes byte-array) (expt 256 (len byte-array)))))

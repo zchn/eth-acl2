@@ -13,38 +13,28 @@
              (evm-bytep (memory/load-byte m addr)))
   :hints (("Goal"
            :in-theory (e/d (memory/load-byte)
-                           (evm-bytep fix-byte evm-w256p fix-w256)))))
-
-(defthm memory-cons-validp-equal
-    (implies (and (evm-bytep v)
-                  (< (len (double-rewrite m)) 115792089237316195423570985008687907853269984665640564039457584007913129639936))
-             (equal (memory/validp (cons v m))
-                    (memory/validp m)))
-  :hints (("Goal"
-           :in-theory (e/d (memory/store-byte memory/validp evm-bytep fix-byte evm-w256p fix-w256)
                            ()))))
 
-(defthm memory-validp-len-m
+(defthm memory-load-byte-array-evm-byte-arrayp
     (implies (memory/validp m)
-             (<= (len m) 115792089237316195423570985008687907853269984665640564039457584007913129639936))
-  :hints (("Goal"
-           :in-theory (e/d (memory/store-byte memory/validp evm-bytep fix-byte evm-w256p fix-w256)
-                           ()))))
+             (evm-byte-arrayp (memory/load-byte-array m addr c))))
 
-(defthm memory-validp-true-listp-m
-    (implies (memory/validp m)
-             (true-listp m))
-  :hints (("Goal"
-           :in-theory (e/d (memory/validp evm-bytep fix-byte evm-w256p fix-w256)
-                           ()))))
+;; TODO(zchn): Prove the following defthm.
+;; (defthm memory-load-w256-evm-w256p
+;;     (implies (memory/validp m)
+;;              (evm-w256p (memory/load-w256 m addr))))
 
 (defthm memory-store-byte-validp
     (implies (memory/validp m)
              (memory/validp (memory/store-byte m addr val)))
   :hints (("Goal"
-           :in-theory (e/d (memory/store-byte evm-bytep evm-w256p fix-byte fix-w256)
-                           (memory/validp)))))
+           :in-theory (e/d (memory/store-byte)
+                           ()))))
 
-;; (defthm memory-store-byte-array-validp
-;;     (implies (memory/validp m)
-;;              (memory/store-byte-array m addr array)))
+(defthm memory-store-byte-array-validp
+    (implies (memory/validp m)
+             (memory/validp (memory/store-byte-array m addr array))))
+
+(defthm memory-store-w256-validp
+    (implies (memory/validp m)
+             (memory/validp (memory/store-w256 m addr v))))

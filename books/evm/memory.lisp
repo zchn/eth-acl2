@@ -9,11 +9,7 @@
 (defund mk-empty-memory () nil)
 
 (defun memory/validp (memory)
-  (and (true-listp memory)
-       (or (not memory)
-           (and (consp memory)
-                (evm-bytep (car memory))
-                (memory/validp (cdr memory))))))
+  (true-listp memory))
 
 (defund memory/load-byte (memory addr)
   (fix-byte (nth addr memory)))
@@ -26,12 +22,8 @@
 (defun memory/load-w256 (memory addr)
   (w-from-bytes (memory/load-byte-array memory addr 32)))
 
-(defun memory/zero-extend (memory mem-len)
-  (append memory (evm-repeat (nfix mem-len) 0)))
-
 (defund memory/store-byte (memory addr value)
-  (update-nth addr (fix-byte value)
-              (memory/zero-extend memory (1+ (- addr (length memory))))))
+  (update-nth addr value memory))
 
 (defun memory/store-byte-array (memory addr array)
   (if (consp array)
