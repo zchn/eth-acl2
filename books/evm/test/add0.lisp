@@ -1,4 +1,3 @@
-
 (in-package "ACL2")
 
 (include-book "../env")
@@ -23,7 +22,7 @@
     ;; gas
     100000
     ;; context
-  
+
     (mk-context
       ;; ia
       87579061662017136990230301793909925042452127430
@@ -38,7 +37,7 @@
       ;; iv
       1000000000000000000
       ;; ih
-  
+
       (mk-block-header
         ;; ihc
         244687034288125203496486448490407391986876152250
@@ -55,7 +54,7 @@
       ;; iw
       "<permission>")
     ;; substate
-  
+
     (mk-substate
       ;; suiside
       nil
@@ -70,10 +69,12 @@
     (mk-initial-env-add0))
 
 (defun env-with-post-add0 ()
-    (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
-                     0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+    (env/set-halted
+     (env/storage/store
+      (mk-initial-env-add0)
+      0
+      115792089237316195423570985008687907853269984665640564039457584007913129639934)
+     (cons 'out-of-range "Halted: pc out of range.")))
 
 (defthm expect-add0
   (expected-env-p (env/exec (env-with-pre-add0))

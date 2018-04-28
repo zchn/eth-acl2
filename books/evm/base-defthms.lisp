@@ -3,15 +3,16 @@
 (include-book "base")
 
 (include-book "arithmetic/top" :dir :system)
+(include-book "ihs/quotient-remainder-lemmas" :dir :system)
 
-(defthm evm-bytep-fix-byte
-    (evm-bytep (fix-byte n)))
+(defthm evm-bytep-modfix-byte
+    (evm-bytep (modfix-byte n)))
 
-(defthm evm-w256p-fix-w256
-    (evm-w256p (fix-w256 n)))
+(defthm evm-w256p-modfix-w256
+    (evm-w256p (modfix-w256 n)))
 
-(defthm fix-w256-lt-2-256
-    (<= (fix-w256 n) 115792089237316195423570985008687907853269984665640564039457584007913129639936))
+(defthm modfix-w256-lt-2-256
+    (<= (modfix-w256 n) 115792089237316195423570985008687907853269984665640564039457584007913129639936))
 
 ;; TODO(zchn): Prove the follow defthm.
 ;; (defthm w-from-bytes-lt-expt-256-len

@@ -12,7 +12,7 @@
   (true-listp memory))
 
 (defund memory/load-byte (memory addr)
-  (fix-byte (nth addr memory)))
+  (modfix-byte (nth addr memory)))
 
 (defun memory/load-byte-array (memory mem-start mem-len)
   (if (zp mem-len) nil
