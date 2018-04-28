@@ -5,88 +5,132 @@
 (include-book "env")
 
 (defun op/stopp (op) (equal op "00"))
-
 (defun op/addp (op) (equal op "01"))
-
 (defun op/mulp (op) (equal op "02"))
-
 (defun op/subp (op) (equal op "03"))
-
 (defun op/divp (op) (equal op "04"))
-
+(defun op/sdivp (op) (equal op "05"))
+(defun op/modp (op) (equal op "06"))
+(defun op/smodp (op) (equal op "07"))
+(defun op/addmodp (op) (equal op "08"))
+(defun op/mulmodp (op) (equal op "09"))
 (defun op/expp (op) (equal op "0a"))
+(defun op/signextendp (op) (equal op "0b"))
 
 (defun op/ltp (op) (equal op "10"))
-
 (defun op/gtp (op) (equal op "11"))
-
+(defun op/sltp (op) (equal op "12"))
+(defun op/sgtp (op) (equal op "13"))
 (defun op/eqp (op) (equal op "14"))
-
 (defun op/iszerop (op) (equal op "15"))
-
 (defun op/andp (op) (equal op "16"))
-
 (defun op/orp (op) (equal op "17"))
-
 (defun op/xorp (op) (equal op "18"))
-
 (defun op/notp (op) (equal op "19"))
+(defun op/bytep (op) (equal op "1a"))
 
-;; (defun op/sha3p (op) (equal op "20"))
+(defun op/sha3p (op) (equal op "20"))
 
-;; (defun op/addressp (op) (equal op "30"))
-
+(defun op/addressp (op) (equal op "30"))
+(defun op/balancep (op) (equal op "31"))
+(defun op/originp (op) (equal op "32"))
 (defun op/callerp (op) (equal op "33"))
-
 (defun op/callvaluep (op) (equal op "34"))
-
 (defun op/calldataloadp (op) (equal op "35"))
-
 (defun op/calldatasizep (op) (equal op "36"))
-
+(defun op/calldatacopyp (op) (equal op "37"))
+(defun op/codesizep (op) (equal op "38"))
 (defun op/codecopyp (op) (equal op "39"))
+(defun op/gaspricep (op) (equal op "3a"))
+(defun op/extcodesizep (op) (equal op "3b"))
+(defun op/extcodecopyp (op) (equal op "3c"))
 
-;; (defun op/blockhashp (op) (equal op "40"))
+(defun op/blockhashp (op) (equal op "40"))
+(defun op/coinbasep (op) (equal op "41"))
+(defun op/timestampp (op) (equal op "42"))
+(defun op/numberp (op) (equal op "43"))
+(defun op/difficulty (op) (equal op "44"))
+(defun op/gaslimitp (op) (equal op "45"))
 
-;; (defun op/popp (op) (equal op "50"))
-
+(defun op/popp (op) (equal op "50"))
 (defun op/mloadp (op) (equal op "51"))
-
 (defun op/mstorep (op) (equal op "52"))
-
 (defun op/mstore8p (op) (equal op "53"))
-
 (defun op/sloadp (op) (equal op "54"))
-
 (defun op/sstorep (op) (equal op "55"))
-
 (defun op/jumpp (op) (equal op "56"))
-
 (defun op/jumpip (op) (equal op "57"))
-
+(defun op/pcp (op) (equal op "58"))
+(defun op/msizep (op) (equal op "59"))
+(defun op/gasp (op) (equal op "5a"))
 (defun op/jumpdestp (op) (equal op "5b"))
 
 (defun op/push1p (op) (equal op "60"))
-
 (defun op/push2p (op) (equal op "61"))
-
+(defun op/push3p (op) (equal op "62"))
 (defun op/push4p (op) (equal op "63"))
-
-;; (defun op/push17p (op) (equal op "70"))
-;; (defun op/push26p (op) (equal op "79"))
-;; (defun op/push27p (op) (equal op "7a"))
-;; (defun op/push28p (op) (equal op "7b"))
+(defun op/push5p (op) (equal op "64"))
+(defun op/push6p (op) (equal op "65"))
+(defun op/push7p (op) (equal op "66"))
+(defun op/push8p (op) (equal op "67"))
+(defun op/push9p (op) (equal op "68"))
+(defun op/push10p (op) (equal op "69"))
+(defun op/push11p (op) (equal op "6a"))
+(defun op/push12p (op) (equal op "6b"))
+(defun op/push13p (op) (equal op "6c"))
+(defun op/push14p (op) (equal op "6d"))
+(defun op/push15p (op) (equal op "6e"))
+(defun op/push16p (op) (equal op "6f"))
+(defun op/push17p (op) (equal op "70"))
+(defun op/push18p (op) (equal op "71"))
+(defun op/push19p (op) (equal op "72"))
+(defun op/push20p (op) (equal op "73"))
+(defun op/push21p (op) (equal op "74"))
+(defun op/push22p (op) (equal op "75"))
+(defun op/push23p (op) (equal op "76"))
+(defun op/push24p (op) (equal op "77"))
+(defun op/push25p (op) (equal op "78"))
+(defun op/push26p (op) (equal op "79"))
+(defun op/push27p (op) (equal op "7a"))
+(defun op/push28p (op) (equal op "7b"))
 (defun op/push29p (op) (equal op "7c"))
-;; (defun op/push30p (op) (equal op "7d"))
-;; (defun op/push31p (op) (equal op "7e"))
-;; (defun op/push32p (op) (equal op "7f"))
+(defun op/push30p (op) (equal op "7d"))
+(defun op/push31p (op) (equal op "7e"))
 (defun op/push32p (op) (equal op "7f"))
 
 (defun op/dup1p (op) (equal op "80"))
-
 (defun op/dup2p (op) (equal op "81"))
+(defun op/dup3p (op) (equal op "82"))
+(defun op/dup4p (op) (equal op "83"))
+(defun op/dup5p (op) (equal op "84"))
+(defun op/dup6p (op) (equal op "85"))
+(defun op/dup7p (op) (equal op "86"))
+(defun op/dup8p (op) (equal op "87"))
+(defun op/dup9p (op) (equal op "88"))
+(defun op/dup10p (op) (equal op "89"))
+(defun op/dup11p (op) (equal op "8a"))
+(defun op/dup12p (op) (equal op "8b"))
+(defun op/dup13p (op) (equal op "8c"))
+(defun op/dup14p (op) (equal op "8d"))
+(defun op/dup15p (op) (equal op "8e"))
+(defun op/dup16p (op) (equal op "8f"))
 
 (defun op/swap1p (op) (equal op "90"))
+(defun op/swap2p (op) (equal op "91"))
+(defun op/swap3p (op) (equal op "92"))
+(defun op/swap4p (op) (equal op "93"))
+(defun op/swap5p (op) (equal op "94"))
+(defun op/swap6p (op) (equal op "95"))
+(defun op/swap7p (op) (equal op "96"))
+(defun op/swap8p (op) (equal op "97"))
+(defun op/swap9p (op) (equal op "98"))
+(defun op/swap10p (op) (equal op "99"))
+(defun op/swap11p (op) (equal op "9a"))
+(defun op/swap12p (op) (equal op "9b"))
+(defun op/swap13p (op) (equal op "9c"))
+(defun op/swap14p (op) (equal op "9d"))
+(defun op/swap15p (op) (equal op "9e"))
+(defun op/swap16p (op) (equal op "9f"))
 
 (defun op/log0p (op) (equal op "a0"))
 (defun op/log1p (op) (equal op "a1"))
@@ -94,8 +138,12 @@
 (defun op/log3p (op) (equal op "a3"))
 (defun op/log4p (op) (equal op "a4"))
 
-;; (defun op/createp (op) (equal op "f0"))
-
+(defun op/createp (op) (equal op "f0"))
+(defun op/callp (op) (equal op "f1"))
+(defun op/callcodep (op) (equal op "f2"))
 (defun op/returnp (op) (equal op "f3"))
+(defun op/delegatecallp (op) (equal op "f4"))
 
 (defun op/revertp (op) (equal op "fd"))
+(defun op/invalidp (op) (equal op "fe"))
+(defun op/selfdestructp (op) (equal op "ff"))
