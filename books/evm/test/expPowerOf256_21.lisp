@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-expPowerOf256_21 ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "60156101000a600055601560ff0a60015560156101010a600255")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -66,15 +66,21 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-expPowerOf256_21 ()
+    (mk-initial-env-expPowerOf256_21))
 
-(defun env-with-post-add0 ()
+(defun env-with-post-expPowerOf256_21 ()
     (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
-                     0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+  (env/storage/store 
+    (env/storage/store 
+      (env/storage/store   (mk-initial-env-expPowerOf256_21)
+                         0
+                         374144419156711147060143317175368453031918731001856)
+                       2
+                       406065029957821485337176148033167189926689985664257)
+                     1
+                     344622627357676135233370016401064897060394287109375) (cons 'out-of-range "Halted: pc out of range.")))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-expPowerOf256_21
+  (expected-env-p (env/exec (env-with-pre-expPowerOf256_21))
+                  (env-with-post-expPowerOf256_21)))

@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-sdiv8 ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "6001600003600160000305600055")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -66,15 +66,15 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-sdiv8 ()
+    (mk-initial-env-sdiv8))
 
-(defun env-with-post-add0 ()
+(defun env-with-post-sdiv8 ()
     (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
+  (env/storage/store   (mk-initial-env-sdiv8)
                      0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+                     1) (cons 'out-of-range "Halted: pc out of range.")))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-sdiv8
+  (expected-env-p (env/exec (env-with-pre-sdiv8))
+                  (env-with-post-sdiv8)))

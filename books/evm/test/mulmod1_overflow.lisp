@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-mulmod1_overflow ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "60056002600160000309600055")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -21,7 +21,7 @@
     ;; halted
     nil
     ;; gas
-    100000
+    10000
     ;; context
   
     (mk-context
@@ -66,15 +66,12 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-mulmod1_overflow ()
+    (mk-initial-env-mulmod1_overflow))
 
-(defun env-with-post-add0 ()
-    (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
-                     0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+(defun env-with-post-mulmod1_overflow ()
+    (env/set-halted (mk-initial-env-mulmod1_overflow) (cons 'out-of-range "Halted: pc out of range.")))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-mulmod1_overflow
+  (expected-env-p (env/exec (env-with-pre-mulmod1_overflow))
+                  (env-with-post-mulmod1_overflow)))

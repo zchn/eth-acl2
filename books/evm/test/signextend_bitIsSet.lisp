@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-signextend_bitIsSet ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "62122ff460000b600055")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -21,7 +21,7 @@
     ;; halted
     nil
     ;; gas
-    100000
+    1000000
     ;; context
   
     (mk-context
@@ -49,7 +49,7 @@
         ;; ihd
         256
         ;; ihl
-        1000000)
+        10000000)
       ;; ie
        "<call/create stack height>"
       ;; iw
@@ -66,15 +66,15 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-signextend_bitIsSet ()
+    (mk-initial-env-signextend_bitIsSet))
 
-(defun env-with-post-add0 ()
+(defun env-with-post-signextend_bitIsSet ()
     (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
+  (env/storage/store   (mk-initial-env-signextend_bitIsSet)
                      0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+                     115792089237316195423570985008687907853269984665640564039457584007913129639924) (cons 'out-of-range "Halted: pc out of range.")))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-signextend_bitIsSet
+  (expected-env-p (env/exec (env-with-pre-signextend_bitIsSet))
+                  (env-with-post-signextend_bitIsSet)))

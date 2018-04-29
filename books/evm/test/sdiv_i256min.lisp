@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-sdiv_i256min ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "60016000037f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60000305600055")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -66,15 +66,15 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-sdiv_i256min ()
+    (mk-initial-env-sdiv_i256min))
 
-(defun env-with-post-add0 ()
+(defun env-with-post-sdiv_i256min ()
     (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
+  (env/storage/store   (mk-initial-env-sdiv_i256min)
                      0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+                     57896044618658097711785492504343953926634992332820282019728792003956564819967) (cons 'out-of-range "Halted: pc out of range.")))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-sdiv_i256min
+  (expected-env-p (env/exec (env-with-pre-sdiv_i256min))
+                  (env-with-post-sdiv_i256min)))

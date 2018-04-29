@@ -217,6 +217,11 @@ def main():
 
         outfile = open('tmp/'+test_name+'.lisp', 'w')
         outfile.write(file_content)
+        outfile.close()
+
+        listfile = open('tmp/testlist.lisp', 'a')
+        listfile.write('(include-book "{}")\n'.format(test_name))
+        listfile.close()
 
         print(file_content)
 

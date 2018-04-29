@@ -5,13 +5,13 @@
 (include-book "../exec")
 (include-book "helper")
 
-(defun mk-initial-env-add0 ()
+(defun mk-initial-env-not1 ()
 
   (mk-env
     ;; pc
     0
     ;; rom
-    (mk-rom "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01600055")
+    (mk-rom "6201e2406000526000511960005260206000f3")
     ;; stack
     (mk-empty-stack)
     ;; mem
@@ -21,7 +21,7 @@
     ;; halted
     nil
     ;; gas
-    100000
+    1000000
     ;; context
   
     (mk-context
@@ -49,7 +49,7 @@
         ;; ihd
         256
         ;; ihl
-        1000000)
+        10000000)
       ;; ie
        "<call/create stack height>"
       ;; iw
@@ -66,15 +66,14 @@
       ;; refund
       0)))
 
-(defun env-with-pre-add0 ()
-    (mk-initial-env-add0))
+(defun env-with-pre-not1 ()
+    (mk-initial-env-not1))
 
-(defun env-with-post-add0 ()
-    (env/set-halted 
-  (env/storage/store   (mk-initial-env-add0)
-                     0
-                     115792089237316195423570985008687907853269984665640564039457584007913129639934) (cons 'out-of-range "Halted: pc out of range.")))
+(defun env-with-post-not1 ()
+  
+  (env/set-halted   (mk-initial-env-not1)
+                  (cons 'return (list #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xff #xfe #x1d #xbf))))
 
-(defthm expect-add0
-  (expected-env-p (env/exec (env-with-pre-add0))
-                  (env-with-post-add0)))
+(defthm expect-not1
+  (expected-env-p (env/exec (env-with-pre-not1))
+                  (env-with-post-not1)))
