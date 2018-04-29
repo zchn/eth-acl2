@@ -197,9 +197,9 @@ def main():
         file_template = textwrap.dedent('''
             (in-package "ACL2")
 
-            (include-book "../env")
-            (include-book "../exec")
-            (include-book "helper")
+            (include-book "../../env")
+            (include-book "../../exec")
+            (include-book "../helper")
 
             {init_env}
             {defpre}

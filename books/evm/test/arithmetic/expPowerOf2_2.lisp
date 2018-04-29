@@ -1,9 +1,9 @@
 
 (in-package "ACL2")
 
-(include-book "../env")
-(include-book "../exec")
-(include-book "helper")
+(include-book "../../env")
+(include-book "../../exec")
+(include-book "../helper")
 
 (defun mk-initial-env-expPowerOf2_2 ()
 
@@ -74,12 +74,12 @@
   (env/storage/store 
     (env/storage/store 
       (env/storage/store   (mk-initial-env-expPowerOf2_2)
-                         1
-                         2)
-                       0
-                       4)
-                     2
-                     8) (cons 'out-of-range "Halted: pc out of range.")))
+                         0
+                         4)
+                       2
+                       8)
+                     1
+                     2) (cons 'out-of-range "Halted: pc out of range.")))
 
 (defthm expect-expPowerOf2_2
   (expected-env-p (env/exec (env-with-pre-expPowerOf2_2))

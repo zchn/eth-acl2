@@ -1,9 +1,9 @@
 
 (in-package "ACL2")
 
-(include-book "../env")
-(include-book "../exec")
-(include-book "helper")
+(include-book "../../env")
+(include-book "../../exec")
+(include-book "../helper")
 
 (defun mk-initial-env-expPowerOf256_31 ()
 
@@ -74,12 +74,12 @@
   (env/storage/store 
     (env/storage/store 
       (env/storage/store   (mk-initial-env-expPowerOf256_31)
-                         1
-                         400631961586894742455537928461950192806830589109049416147172451019287109375)
-                       2
-                       510418989351370756385471987562075329801799753598808217293070249498399284993)
-                     0
-                     452312848583266388373324160190187140051835877600158453279131187530910662656) (cons 'out-of-range "Halted: pc out of range.")))
+                         0
+                         452312848583266388373324160190187140051835877600158453279131187530910662656)
+                       1
+                       400631961586894742455537928461950192806830589109049416147172451019287109375)
+                     2
+                     510418989351370756385471987562075329801799753598808217293070249498399284993) (cons 'out-of-range "Halted: pc out of range.")))
 
 (defthm expect-expPowerOf256_31
   (expected-env-p (env/exec (env-with-pre-expPowerOf256_31))

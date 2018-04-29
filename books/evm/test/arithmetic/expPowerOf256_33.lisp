@@ -1,9 +1,9 @@
 
 (in-package "ACL2")
 
-(include-book "../env")
-(include-book "../exec")
-(include-book "helper")
+(include-book "../../env")
+(include-book "../../exec")
+(include-book "../helper")
 
 (defun mk-initial-env-expPowerOf256_33 ()
 
@@ -73,10 +73,10 @@
     (env/set-halted 
   (env/storage/store 
     (env/storage/store   (mk-initial-env-expPowerOf256_33)
-                       1
-                       113665313029002853291453156292219928131682491712451940131389809756603247763711)
-                     2
-                     17165859609674220244882668959332272777506387746279808507839962817053649281281) (cons 'out-of-range "Halted: pc out of range.")))
+                       2
+                       17165859609674220244882668959332272777506387746279808507839962817053649281281)
+                     1
+                     113665313029002853291453156292219928131682491712451940131389809756603247763711) (cons 'out-of-range "Halted: pc out of range.")))
 
 (defthm expect-expPowerOf256_33
   (expected-env-p (env/exec (env-with-pre-expPowerOf256_33))

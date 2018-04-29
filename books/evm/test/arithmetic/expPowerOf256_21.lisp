@@ -1,9 +1,9 @@
 
 (in-package "ACL2")
 
-(include-book "../env")
-(include-book "../exec")
-(include-book "helper")
+(include-book "../../env")
+(include-book "../../exec")
+(include-book "../helper")
 
 (defun mk-initial-env-expPowerOf256_21 ()
 
@@ -74,10 +74,10 @@
   (env/storage/store 
     (env/storage/store 
       (env/storage/store   (mk-initial-env-expPowerOf256_21)
-                         0
-                         374144419156711147060143317175368453031918731001856)
-                       2
-                       406065029957821485337176148033167189926689985664257)
+                         2
+                         406065029957821485337176148033167189926689985664257)
+                       0
+                       374144419156711147060143317175368453031918731001856)
                      1
                      344622627357676135233370016401064897060394287109375) (cons 'out-of-range "Halted: pc out of range.")))
 
