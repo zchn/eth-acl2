@@ -18,7 +18,7 @@
     (implies (env/validp e)
              (env/validp (exec-swap-helper e n)))
   :hints (("Goal"
-           :in-theory (e/d () (env/validp exec-swap-swapper env/pc+n)))))
+           :in-theory (e/d () (env/validp exec-swap-swapper env/set-pc)))))
 
 (defthm exec-stop-io-validp
     (implies (env/validp e)
