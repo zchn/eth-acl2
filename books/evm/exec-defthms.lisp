@@ -13,10 +13,22 @@
 (defthm env/step-io-validp
     (implies (env/validp e)
              (env/validp (env/step e)))
-  :hints (("Goal" :in-theory (e/d (env/step evm-w256p)
-                                  (stack/top stack/validp))
+  :hints (("Goal" :in-theory (e/d (env/step)
+                                  (exec-swap-helper
+                                   env/validp
+                                   env/set-pc
+                                   env/stack/push
+                                   env/stack/popn
+                                   env/mem/store-byte
+                                   env/mem/store-byte-array
+                                   env/mem/store-w256
+                                   env/storage/store
+                                   env/set-halted
+                                   env/set-substate
+                                   ))
                   :use ((:instance stack/top-evm-w256p
-                                   (s (caddr e)))))))
+                                   (s (caddr e)))))
+          ))
 
 
 (local (defthm env/exec-hacky-io-validp

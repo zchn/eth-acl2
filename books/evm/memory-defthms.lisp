@@ -26,10 +26,7 @@
 
 (defthm memory-store-byte-validp
     (implies (memory/validp m)
-             (memory/validp (memory/store-byte m addr val)))
-  :hints (("Goal"
-           :in-theory (e/d (memory/store-byte)
-                           ()))))
+             (memory/validp (memory/store-byte m addr val))))
 
 (defthm memory-store-byte-array-validp
     (implies (memory/validp m)

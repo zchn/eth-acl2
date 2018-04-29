@@ -258,14 +258,42 @@
 
 (defun exec-jumpdest (env) (env/pc++ env))
 
-(defun exec-swap1 (env)
-  (let* ((op0 (env/stack/n env 0))
-         (op1 (env/stack/n env 1))
-         (tmp-env (env/stack/push
-                   (env/stack/push (env/stack/popn env 2) op0)
-                   op1))
+(defun exec-swap-swapper (env n)
+  (declare (xargs :measure (nfix n)))
+  (if (zp n) env
+      (if (equal n 1)
+          (let* ((op0 (env/stack/n env 0))
+                 (op1 (env/stack/n env 1))
+                 (tmp-env (env/stack/push
+                           (env/stack/push (env/stack/popn env 2) op0)
+                           op1)))
+            tmp-env)
+          (let* ((op0 (env/stack/n env 0))
+                 (swap-n-1-env (exec-swap-swapper (env/stack/popn env 1) (1- n)))
+                 (pushed-env (env/stack/push swap-n-1-env op0)))
+            (exec-swap-swapper pushed-env 1)))))
+
+(defun exec-swap-helper (env n)
+  (let* ((tmp-env (exec-swap-swapper env n))
          (new-env (env/pc++ tmp-env)))
     new-env))
+
+(defun exec-swap1 (env) (exec-swap-helper env 1))
+(defun exec-swap2 (env) (exec-swap-helper env 2))
+(defun exec-swap3 (env) (exec-swap-helper env 3))
+(defun exec-swap4 (env) (exec-swap-helper env 4))
+(defun exec-swap5 (env) (exec-swap-helper env 5))
+(defun exec-swap6 (env) (exec-swap-helper env 6))
+(defun exec-swap7 (env) (exec-swap-helper env 7))
+(defun exec-swap8 (env) (exec-swap-helper env 8))
+(defun exec-swap9 (env) (exec-swap-helper env 9))
+(defun exec-swap10 (env) (exec-swap-helper env 10))
+(defun exec-swap11 (env) (exec-swap-helper env 11))
+(defun exec-swap12 (env) (exec-swap-helper env 12))
+(defun exec-swap13 (env) (exec-swap-helper env 13))
+(defun exec-swap14 (env) (exec-swap-helper env 14))
+(defun exec-swap15 (env) (exec-swap-helper env 15))
+(defun exec-swap16 (env) (exec-swap-helper env 16))
 
 (defun exec-log-helper (env n)
   (let* (;; TODO(zchn): Actually support log operations

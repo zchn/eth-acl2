@@ -6,12 +6,12 @@
 
 ;; The memory model is a simple word-addressed byte array.
 
-(defund mk-empty-memory () nil)
+(defun mk-empty-memory () nil)
 
 (defun memory/validp (memory)
   (true-listp memory))
 
-(defund memory/load-byte (memory addr)
+(defun memory/load-byte (memory addr)
   (modfix-byte (nth addr memory)))
 
 (defun memory/load-byte-array (memory mem-start mem-len)
@@ -22,7 +22,7 @@
 (defun memory/load-w256 (memory addr)
   (w-from-bytes (memory/load-byte-array memory addr 32)))
 
-(defund memory/store-byte (memory addr value)
+(defun memory/store-byte (memory addr value)
   (update-nth addr value memory))
 
 (defun memory/store-byte-array (memory addr array)
