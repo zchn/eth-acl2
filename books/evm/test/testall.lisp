@@ -4,3 +4,4 @@
 (include-book "bitwise-logic/testall")
 (include-book "blockinfo/testall")
 (include-book "environmentinfo/testall")
+(include-book "io-flow/testall")
