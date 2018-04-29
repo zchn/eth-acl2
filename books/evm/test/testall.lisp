@@ -2,3 +2,4 @@
 
 (include-book "arithmetic/testall")
 (include-book "bitwise-logic/testall")
+(include-book "blockinfo/testall")
