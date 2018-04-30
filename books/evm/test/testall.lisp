@@ -6,3 +6,4 @@
 (include-book "environmentinfo/testall")
 (include-book "io-flow/testall")
 (include-book "push-dup-swap/testall")
+(include-book "system/testall")
