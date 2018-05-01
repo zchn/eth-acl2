@@ -1,6 +1,6 @@
 (in-package "ACL2")
 
-(include-book "std/strings/top" :dir :system)
+(local (include-book "std/strings/top" :dir :system))
 (include-book "std/strings/pretty" :dir :system)
 
 (include-book "base")

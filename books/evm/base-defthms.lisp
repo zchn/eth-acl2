@@ -1,9 +1,9 @@
 (in-package "ACL2")
 
-(include-book "base")
+(local (include-book "arithmetic/top" :dir :system))
+(local (include-book "ihs/quotient-remainder-lemmas" :dir :system))
 
-(include-book "arithmetic/top" :dir :system)
-(include-book "ihs/quotient-remainder-lemmas" :dir :system)
+(include-book "base")
 
 (defthm evm-bytep-modfix-byte
     (evm-bytep (modfix-byte n)))

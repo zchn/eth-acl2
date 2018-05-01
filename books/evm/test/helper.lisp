@@ -1,5 +1,7 @@
 (in-package "ACL2")
 
+(include-book "std/alists/top" :dir :system)
+
 (include-book "../env")
 (include-book "../exec")
 

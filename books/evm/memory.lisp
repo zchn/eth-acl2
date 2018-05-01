@@ -1,6 +1,6 @@
 (in-package "ACL2")
 
-(include-book "std/lists/top" :dir :system)
+(local (include-book "std/lists/top" :dir :system))
 
 (include-book "base")
 

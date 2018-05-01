@@ -4,9 +4,9 @@
 ;; concept to the memory but rather than a byte array, it is a word-
 ;; addressable word array.
 
-(include-book "base")
+(local (include-book "std/alists/top" :dir :system))
 
-(include-book "std/alists/top" :dir :system)
+(include-book "base")
 
 ;; Type of a storage: ContractAddress => (WordOffset => WordValue)
 

@@ -1,5 +1,8 @@
 (in-package "ACL2")
 
+(local (include-book "arithmetic/top" :dir :system))
+(local (include-book "ihs/quotient-remainder-lemmas" :dir :system))
+
 (include-book "base-defthms")
 
 (include-book "memory")
