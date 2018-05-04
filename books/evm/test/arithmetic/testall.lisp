@@ -5,7 +5,7 @@
 (include-book "add1")
 (include-book "add2")
 (include-book "add3")
-;; (include-book "add4")
+(include-book "add4")
 ;; (include-book "addmod0")
 ;; (include-book "addmod1")
 ;; (include-book "addmod1_overflow2")
