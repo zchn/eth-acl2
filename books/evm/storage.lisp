@@ -18,7 +18,7 @@
   t)
 
 (defun storage/load (storage address offset)
-  (modfix-w256 (nth offset (hons-get address storage))))
+  (modfix-w256 (nth offset (cdr (hons-get address storage)))))
 
 (defun storage/store (storage address offset value)
   (hons-acons address

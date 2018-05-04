@@ -20,14 +20,14 @@
 (defun exec-mul (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
-         (tmp-env (env/stack/push (env/stack/popn env 2) (* op0 op1)))
+         (tmp-env (env/stack/push (env/stack/popn env 2) (modfix-w256 (* op0 op1))))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
 (defun exec-sub (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
-         (tmp-env (env/stack/push (env/stack/popn env 2) (- op0 op1)))
+         (tmp-env (env/stack/push (env/stack/popn env 2) (neg-to-unsigned-w256 (- op0 op1))))
          (new-env (env/pc++ tmp-env)))
     new-env))
 

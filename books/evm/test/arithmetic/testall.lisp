@@ -3,8 +3,8 @@
 ;; TODO(zchn): Make this pass.
 (include-book "add0")
 (include-book "add1")
-;; (include-book "add2")
-;; (include-book "add3")
+(include-book "add2")
+(include-book "add3")
 ;; (include-book "add4")
 ;; (include-book "addmod0")
 ;; (include-book "addmod1")

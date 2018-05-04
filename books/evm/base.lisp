@@ -19,6 +19,13 @@
 (defun modfix-w256 (n)
   (mod (nfix n) (expt 2 256)))
 
+;; Convert a negative integer to it's w256 two's complement. Keep
+;; non-negative numbers untouched.
+(defun neg-to-unsigned-w256 (i)
+  (let ((ifixed (ifix i)))
+    (if (>= ifixed 0) ifixed
+        (+ (expt 2 256) (mod ifixed (expt 2 255))))))
+
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)
       (if (cdr byte-list)
