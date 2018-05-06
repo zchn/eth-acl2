@@ -39,6 +39,26 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-mod (env)
+  (let* ((op0 (env/stack/n env 0))
+         (op1 (env/stack/n env 1))
+         (tmp-env (env/stack/push (env/stack/popn env 2)
+                                  (if (zp op1) 0 (mod op0 op1))))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-addmod (env)
+  (let* ((op0 (env/stack/n env 0))
+         (op1 (env/stack/n env 1))
+         (modu (env/stack/n env 2))
+         (tmp-env
+           (env/stack/push
+            (env/stack/popn env 3)
+            (if (zp modu) 0
+                (modfix-w256 (mod (+ op0 op1) modu)))))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-exp (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))

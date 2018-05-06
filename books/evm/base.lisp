@@ -24,7 +24,7 @@
 (defun neg-to-unsigned-w256 (i)
   (let ((ifixed (ifix i)))
     (if (>= ifixed 0) ifixed
-        (+ (expt 2 256) (mod ifixed (expt 2 255))))))
+        (mod ifixed (expt 2 256)))))
 
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)
