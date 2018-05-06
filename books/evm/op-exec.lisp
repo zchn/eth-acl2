@@ -27,7 +27,7 @@
 (defun exec-sub (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
-         (tmp-env (env/stack/push (env/stack/popn env 2) (neg-to-unsigned-w256 (- op0 op1))))
+         (tmp-env (env/stack/push (env/stack/popn env 2) (signed-to-unsigned-w256 (- op0 op1))))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
