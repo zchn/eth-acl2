@@ -1,5 +1,8 @@
 (in-package "ACL2")
 
+(local (include-book "arithmetic/rationals" :dir :system))
+(local (include-book "ihs/quotient-remainder-lemmas" :dir :system))
+
 (defun evm-bytep (n)
   (and (natp n)
        (< n 256)))
@@ -20,10 +23,11 @@
   (mod (nfix n) (expt 2 256)))
 
 (defun expt-w256 (r i)
+  (declare (xargs :measure (nfix i)))
   (if (< (nfix i) 5) (modfix-w256 (expt r (nfix i)))
       (modfix-w256
-       (* (modfix-w256 (expt r (floor (nfix i) 2)))
-          (modfix-w256 (expt r (- (nfix i) (floor (nfix i) 2))))))))
+       (* (modfix-w256 (expt (expt-w256 r (floor (nfix i) 2)) 2))
+          (modfix-w256 (expt r (mod (nfix i) 2)))))))
 
 (defun signed-to-unsigned-w256 (i)
   (mod (ifix i) (expt 2 256)))
