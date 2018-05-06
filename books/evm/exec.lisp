@@ -15,6 +15,7 @@
                   ((op/divp nextop) (exec-div env))
                   ((op/sdivp nextop) (exec-sdiv env))
                   ((op/modp nextop) (exec-mod env))
+                  ((op/smodp nextop) (exec-smod env))
                   ((op/addmodp nextop) (exec-addmod env))
                   ((op/mulmodp nextop) (exec-mulmod env))
                   ((op/expp nextop) (exec-exp env))
