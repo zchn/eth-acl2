@@ -84,7 +84,6 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
-
 (defun exec-mulmod (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
@@ -100,7 +99,7 @@
 (defun exec-exp (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
-         (tmp-env (env/stack/push (env/stack/popn env 2) (modfix-w256 (expt op0 op1))))
+         (tmp-env (env/stack/push (env/stack/popn env 2) (expt-w256 op0 op1)))
          (new-env (env/pc++ tmp-env)))
     new-env))
 

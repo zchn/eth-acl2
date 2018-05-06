@@ -19,6 +19,12 @@
 (defun modfix-w256 (n)
   (mod (nfix n) (expt 2 256)))
 
+(defun expt-w256 (r i)
+  (if (< (nfix i) 5) (modfix-w256 (expt r (nfix i)))
+      (modfix-w256
+       (* (modfix-w256 (expt r (floor (nfix i) 2)))
+          (modfix-w256 (expt r (- (nfix i) (floor (nfix i) 2))))))))
+
 (defun signed-to-unsigned-w256 (i)
   (mod (ifix i) (expt 2 256)))
 
