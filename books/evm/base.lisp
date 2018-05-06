@@ -22,6 +22,11 @@
 (defun signed-to-unsigned-w256 (i)
   (mod (ifix i) (expt 2 256)))
 
+(defun unsigned-to-signed-w256 (n)
+  (let ((fixed (mod (nfix n) (expt 2 256))))
+    (if (>= fixed (expt 2 255)) (- fixed (expt 2 256))
+        fixed)))
+
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)
       (if (cdr byte-list)

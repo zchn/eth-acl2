@@ -39,6 +39,20 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-sdiv (env)
+  (let* ((sop0 (unsigned-to-signed-w256 (env/stack/n env 0)))
+         (sop1 (unsigned-to-signed-w256 (env/stack/n env 1)))
+         (sresult (if (zerop sop1) 0
+                      (if (and (equal sop0
+                                     (- (expt 2 255)))
+                              (equal sop1 -1))
+                          (- (expt 2 255))
+                          (truncate sop0 sop1))))
+         (tmp-env (env/stack/push (env/stack/popn env 2)
+                                  (signed-to-unsigned-w256 sresult)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-mod (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
