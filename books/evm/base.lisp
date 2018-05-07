@@ -29,13 +29,20 @@
        (* (modfix-w256 (expt (expt-w256 r (floor (nfix i) 2)) 2))
           (modfix-w256 (expt r (mod (nfix i) 2)))))))
 
+(defun signed-to-unsigned-nbits (i n)
+  (mod (ifix i) (expt 2 (nfix n))))
+
 (defun signed-to-unsigned-w256 (i)
-  (mod (ifix i) (expt 2 256)))
+  (signed-to-unsigned-nbits i 256))
+
+(defun unsigned-to-signed-nbits (n nbits)
+  (let* ((fixed-nbits (nfix nbits))
+         (fixed (mod (nfix n) (expt 2 fixed-nbits))))
+    (if (>= fixed (expt 2 (1- fixed-nbits))) (- fixed (expt 2 fixed-nbits))
+        fixed)))
 
 (defun unsigned-to-signed-w256 (n)
-  (let ((fixed (mod (nfix n) (expt 2 256))))
-    (if (>= fixed (expt 2 255)) (- fixed (expt 2 256))
-        fixed)))
+  (unsigned-to-signed-nbits n 256))
 
 (defun w-from-bytes (byte-list)
   (if (consp byte-list)
