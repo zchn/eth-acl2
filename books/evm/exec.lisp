@@ -49,6 +49,7 @@
                   ((op/sstorep nextop) (exec-sstore env))
                   ((op/jumpp nextop) (exec-jump env))
                   ((op/jumpip nextop) (exec-jumpi env))
+                  ((op/pcp nextop) (exec-pc env))
                   ((op/jumpdestp nextop) (exec-jumpdest env))
                   ((op/push1p nextop) (exec-push1 env))
                   ((op/push2p nextop) (exec-push2 env))

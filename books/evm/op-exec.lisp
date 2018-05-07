@@ -321,6 +321,12 @@
                       (env/set-pc env dest))))
     new-env))
 
+(defun exec-pc (env)
+  (let* ((tmp-env (env/stack/push env
+                                  (env/pc env)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-jumpdest (env) (env/pc++ env))
 
 
