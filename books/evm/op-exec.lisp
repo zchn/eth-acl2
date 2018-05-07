@@ -116,7 +116,7 @@
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
          (tmp-env (env/stack/push (env/stack/popn env 2)
-                                  (if (<= op0 op1) 1 0)))
+                                  (if (< op0 op1) 1 0)))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
@@ -124,7 +124,23 @@
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
          (tmp-env (env/stack/push (env/stack/popn env 2)
-                                  (if (>= op0 op1) 1 0)))
+                                  (if (> op0 op1) 1 0)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-slt (env)
+  (let* ((sop0 (unsigned-to-signed-w256 (env/stack/n env 0)))
+         (sop1 (unsigned-to-signed-w256 (env/stack/n env 1)))
+         (tmp-env (env/stack/push (env/stack/popn env 2)
+                                  (if (< sop0 sop1) 1 0)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-sgt (env)
+  (let* ((sop0 (unsigned-to-signed-w256 (env/stack/n env 0)))
+         (sop1 (unsigned-to-signed-w256 (env/stack/n env 1)))
+         (tmp-env (env/stack/push (env/stack/popn env 2)
+                                  (if (> sop0 sop1) 1 0)))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
@@ -165,8 +181,15 @@
     new-env))
 
 (defun exec-not (env)
-  (let* ((op0 (env/stack/n env 0))
-         (tmp-env (env/stack/push (env/stack/popn env 1) (lognot op0)))
+  (let* ((sop0 (unsigned-to-signed-w256 (env/stack/n env 0)))
+         (tmp-env (env/stack/push (env/stack/popn env 1) (signed-to-unsigned-w256 (lognot sop0))))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-byte (env)
+  (let* ((boffset (env/stack/n env 0))
+         (original (env/stack/n env 1))
+         (tmp-env (env/stack/push (env/stack/popn env 2) (nth boffset (w-to-bytes original 32))))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
