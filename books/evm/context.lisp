@@ -82,6 +82,16 @@
 
 (defun context/Ih (context) (nth 6 context))
 
+(defun context/Ihc (context) (nth 0 (nth 6 context)))
+
+(defun context/Ihs (context) (nth 1 (nth 6 context)))
+
+(defun context/Ihi (context) (nth 2 (nth 6 context)))
+
+(defun context/Ihd (context) (nth 3 (nth 6 context)))
+
+(defun context/Ihl (context) (nth 4 (nth 6 context)))
+
 (defun context/validp (context)
   (and (listp context)
        (equal (length context) 9)

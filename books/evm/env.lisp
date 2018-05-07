@@ -76,6 +76,16 @@
 
 (defun env/context/Iv (env) (context/Iv (env/context env)))
 
+(defun env/context/Ihc (env) (context/Ihc (env/context env)))
+
+(defun env/context/Ihs (env) (context/Ihs (env/context env)))
+
+(defun env/context/Ihi (env) (context/Ihi (env/context env)))
+
+(defun env/context/Ihd (env) (context/Ihd (env/context env)))
+
+(defun env/context/Ihl (env) (context/Ihl (env/context env)))
+
 (defun env/set-context (env context) (update-nth 7 context env))
 
 (defun env/storage (env) (nth 4 env))

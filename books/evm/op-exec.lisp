@@ -228,6 +228,41 @@
          (new-env (env/pc++ memmed-env)))
     new-env))
 
+(defun exec-coinbase (env)
+  (let* ((pushed-env
+           (env/stack/push env
+                           (env/context/Ihc env)))
+         (new-env (env/pc++ pushed-env)))
+    new-env))
+
+(defun exec-timestamp (env)
+  (let* ((pushed-env
+           (env/stack/push env
+                           (env/context/Ihs env)))
+         (new-env (env/pc++ pushed-env)))
+    new-env))
+
+(defun exec-number (env)
+  (let* ((pushed-env
+           (env/stack/push env
+                           (env/context/Ihi env)))
+         (new-env (env/pc++ pushed-env)))
+    new-env))
+
+(defun exec-difficulty (env)
+  (let* ((pushed-env
+           (env/stack/push env
+                           (env/context/Ihd env)))
+         (new-env (env/pc++ pushed-env)))
+    new-env))
+
+(defun exec-gaslimit (env)
+  (let* ((pushed-env
+           (env/stack/push env
+                           (env/context/Ihl env)))
+         (new-env (env/pc++ pushed-env)))
+    new-env))
+
 (defun exec-push-helper (env n)
   (let* ((pc (env/pc env))
          (rom (env/rom env))

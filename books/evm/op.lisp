@@ -49,7 +49,7 @@
 (defun op/coinbasep (op) (equal op "41"))
 (defun op/timestampp (op) (equal op "42"))
 (defun op/numberp (op) (equal op "43"))
-(defun op/difficulty (op) (equal op "44"))
+(defun op/difficultyp (op) (equal op "44"))
 (defun op/gaslimitp (op) (equal op "45"))
 
 (defun op/popp (op) (equal op "50"))
