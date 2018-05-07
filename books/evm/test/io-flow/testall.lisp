@@ -21,7 +21,6 @@
 (include-book "JDfromStorageDynamicJump0_jumpdest2")
 (include-book "JDfromStorageDynamicJumpi1")
 (include-book "JDfromStorageDynamicJumpiAfterStop")
-(include-book "byte1")
 ;; (include-book "deadCode_1")
 (include-book "dupAt51becameMload")
 (include-book "for_loop1")
