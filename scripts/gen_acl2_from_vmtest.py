@@ -10,6 +10,7 @@ def make_storage_update(storage_update, content):
        (env/storage/store {src_env}
                           {offset}
                           {value})''')
+
     for offset,value in content['storage'].items():
         storage_update = storage_update_template.format(
             src_env=textwrap.indent(storage_update, '  '),

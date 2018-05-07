@@ -22,5 +22,5 @@
 
 (defun storage/store (storage address offset value)
   (hons-acons address
-              (update-nth offset value (hons-get address storage))
+              (update-nth offset value (cdr (hons-get address storage)))
               storage))
