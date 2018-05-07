@@ -19,6 +19,7 @@
                   ((op/addmodp nextop) (exec-addmod env))
                   ((op/mulmodp nextop) (exec-mulmod env))
                   ((op/expp nextop) (exec-exp env))
+                  ((op/signextendp nextop) (exec-signextend env))
                   ((op/ltp nextop) (exec-lt env))
                   ((op/gtp nextop) (exec-gt env))
                   ((op/eqp nextop) (exec-eq env))

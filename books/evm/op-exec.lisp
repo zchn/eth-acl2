@@ -103,6 +103,15 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-signextend (env)
+  (let* ((nbytes (env/stack/n env 0))
+         (soriginal (env/stack/n env 1))
+         (tmp-env (env/stack/push (env/stack/popn env 2)
+                                  (signed-to-unsigned-w256
+                                   (unsigned-to-signed-nbits soriginal (* 8 (1+ nbytes))))))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-lt (env)
   (let* ((op0 (env/stack/n env 0))
          (op1 (env/stack/n env 1))
