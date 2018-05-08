@@ -70,7 +70,7 @@
     (mk-initial-env-signextend_Overflow_dj42))
 
 (defun env-with-post-signextend_Overflow_dj42 ()
-    (env/set-halted (mk-initial-env-signextend_Overflow_dj42) (cons 'out-of-range "Halted: pc out of range.")))
+    (env/set-halted (mk-initial-env-signextend_Overflow_dj42) (cons 'stop "Halted: STOP.")))
 
 (defthm expect-signextend_Overflow_dj42
   (expected-env-p (env/exec (env-with-pre-signextend_Overflow_dj42))
