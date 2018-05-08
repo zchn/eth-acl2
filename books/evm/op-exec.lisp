@@ -6,6 +6,11 @@
 (include-book "base")
 (include-book "env")
 
+(defun exec-unsupported (env op)
+  (let ((tmp-env
+          (env/set-halted env (cons 'unsupported (str::cat "Halted: unsupported OP:" op)))))
+    (env/pc++ tmp-env)))
+
 (defun exec-stop (env)
   (let ((tmp-env (env/set-halted env (cons 'stop "Halted: STOP."))))
     (env/pc++ tmp-env)))
@@ -193,6 +198,22 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-sha3 (env)
+  (exec-unsupported env "SHA3"))
+
+(defun exec-address (env)
+  (let* ((tmp-env (env/stack/push env (env/context/Ia env)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
+(defun exec-balance (env)
+  (exec-unsupported env "BALANCE"))
+
+(defun exec-origin (env)
+  (let* ((tmp-env (env/stack/push env (env/context/Io env)))
+         (new-env (env/pc++ tmp-env)))
+    new-env))
+
 (defun exec-caller (env)
   (let* ((tmp-env (env/stack/push env (env/context/Is env)))
          (new-env (env/pc++ tmp-env)))
@@ -216,6 +237,12 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
+(defun exec-calldatacopy (env)
+  (exec-unsupported env "CALLDATACOPY"))
+
+(defun exec-codesize (env)
+  (exec-unsupported env "CODESIZE"))
+
 (defun exec-codecopy (env)
   (let* ((mem-start (env/stack/n env 0))
          (rom-start (env/stack/n env 1))
@@ -227,6 +254,18 @@
             (env/rom/byte-list-nthcdr popped-env rom-start)))
          (new-env (env/pc++ memmed-env)))
     new-env))
+
+(defun exec-gasprice (env)
+  (exec-unsupported env "GASPRICE"))
+
+(defun exec-extcodesize (env)
+  (exec-unsupported env "EXTCODESIZE"))
+
+(defun exec-extcodecopy (env)
+  (exec-unsupported env "EXTCODECOPY"))
+
+(defun exec-blockhash (env)
+  (exec-unsupported env "BLOCKHASH"))
 
 (defun exec-coinbase (env)
   (let* ((pushed-env
@@ -327,8 +366,13 @@
          (new-env (env/pc++ tmp-env)))
     new-env))
 
-(defun exec-jumpdest (env) (env/pc++ env))
+(defun exec-msize (env)
+  (exec-unsupported env "MSIZE"))
 
+(defun exec-gas (env)
+  (exec-unsupported env "GAS"))
+
+(defun exec-jumpdest (env) (env/pc++ env))
 
 (defun exec-push-helper (env n)
   (let* ((pc (env/pc env))
@@ -443,13 +487,14 @@
 (defun exec-log3 (env) (exec-log-helper env 3))
 (defun exec-log4 (env) (exec-log-helper env 4))
 
-(defun exec-revert (env)
-  (let* (;; TODO(zchn): calculate the correct gas consumption.
-         (popped-env (env/stack/popn env 2))
-         (reverted-env (env/set-substate popped-env (mk-empty-substate)))
-         (halted-env (env/set-halted reverted-env (cons 'revert "Halted: REVERT")))
-         (new-env (env/pc++ halted-env)))
-    new-env))
+(defun exec-create (env)
+  (exec-unsupported env "CREATE"))
+
+(defun exec-call (env)
+  (exec-unsupported env "CALL"))
+
+(defun exec-callcode (env)
+  (exec-unsupported env "CALLCODE"))
 
 (defun exec-return (env)
   (let* ((mem-start (env/stack/n env 0))
@@ -461,6 +506,23 @@
                                                                             mem-len))))
          (new-env (env/pc++ halted-env)))
     new-env))
+
+(defun exec-delegatecall (env)
+  (exec-unsupported env "DELEGATECALL"))
+
+(defun exec-revert (env)
+  (let* (;; TODO(zchn): calculate the correct gas consumption.
+         (popped-env (env/stack/popn env 2))
+         (reverted-env (env/set-substate popped-env (mk-empty-substate)))
+         (halted-env (env/set-halted reverted-env (cons 'revert "Halted: REVERT")))
+         (new-env (env/pc++ halted-env)))
+    new-env))
+
+(defun exec-invalid (env)
+  (exec-unsupported env "INVALID"))
+
+(defun exec-selfdestruct (env)
+  (exec-unsupported env "SELFDESTRUCT"))
 
 (defun exec-unknown (env)
   (let ((tmp-env

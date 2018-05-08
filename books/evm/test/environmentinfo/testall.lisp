@@ -2,8 +2,8 @@
 
 ;; (include-book "ExtCodeSizeAddressInputTooBigLeftMyAddress")
 ;; (include-book "ExtCodeSizeAddressInputTooBigRightMyAddress")
-;; (include-book "address0")
-;; (include-book "address1")
+(include-book "address0")
+(include-book "address1")
 ;; (include-book "balance0")
 ;; (include-book "balance01")
 ;; (include-book "balance1")

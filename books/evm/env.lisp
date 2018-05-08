@@ -70,7 +70,9 @@
 
 (defun env/context (env) (nth 7 env))
 
-(defun env/context/Ia (env) (context/Is (env/context env)))
+(defun env/context/Ia (env) (context/Ia (env/context env)))
+
+(defun env/context/Io (env) (context/Io (env/context env)))
 
 (defun env/context/Is (env) (context/Is (env/context env)))
 
@@ -85,6 +87,10 @@
 (defun env/context/Ihd (env) (context/Ihd (env/context env)))
 
 (defun env/context/Ihl (env) (context/Ihl (env/context env)))
+
+(defun env/context/Ie (env) (context/Ie (env/context env)))
+
+(defun env/context/Iw (env) (context/Iw (env/context env)))
 
 (defun env/set-context (env context) (update-nth 7 context env))
 
@@ -119,7 +125,8 @@
                                             'revert
                                             'stop
                                             'selfdestruct
-                                            'unknown)))))
+                                            'unknown
+                                            'unsupported)))))
 
 (defun env/halted/validp (env)
   (halted/validp (env/halted env)))

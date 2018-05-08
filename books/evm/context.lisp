@@ -74,6 +74,10 @@
 
 (defun context/Ia (context) (nth 0 context))
 
+(defun context/Io (context) (nth 1 context))
+
+(defun context/Ip (context) (nth 2 context))
+
 (defun context/Id (context) (nth 3 context))
 
 (defun context/Is (context) (nth 4 context))
@@ -91,6 +95,10 @@
 (defun context/Ihd (context) (nth 3 (nth 6 context)))
 
 (defun context/Ihl (context) (nth 4 (nth 6 context)))
+
+(defun context/Ie (context) (nth 7 context))
+
+(defun context/Iw (context) (nth 8 context))
 
 (defun context/validp (context)
   (and (listp context)
