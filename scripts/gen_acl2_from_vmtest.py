@@ -25,7 +25,7 @@ def make_storage_update(storage_update, content):
 
     del content['storage']
     if len(content.keys()) != 0:
-        logging.info('Unsupported: {}'.format(content.keys().sort()))
+        logging.info('Unsupported: {}'.format(sorted(content.keys())))
 
     return storage_update
 
@@ -125,7 +125,7 @@ def main():
             del details['env'][key]
         if len(details['env'].keys()) != 0:
             logging.info('Unsupported: env.{}'
-                         .format(details['env'].keys().sort()))
+                         .format(sorted(details['env'].keys())))
 
         mk_context_template = textwrap.dedent('''
             (mk-context
@@ -257,12 +257,12 @@ def main():
             del details['exec'][key]
         if len(details['exec'].keys()) != 0:
             logging.info('Unsupported: exec.{}'.format(
-                details['exec'].keys().sort()))
+                sorted(details['exec'].keys())))
 
         for key in ['env', 'exec', 'pre', 'post', 'out']:
             del details[key]
         if len(details.keys()) != 0:
-            logging.info('Unsupported: {}'.format(details.keys().sort()))
+            logging.info('Unsupported: {}'.format(sorted(details.keys())))
 
 if __name__ == "__main__":
     main()
