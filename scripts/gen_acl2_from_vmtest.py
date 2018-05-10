@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 import argparse
+import copy
 import json
+import logging
+import os
 import textwrap
 
-from pprint import pprint
+logging.basicConfig(level=logging.INFO)
 
 def make_storage_update(storage_update, content):
+    if 'storage' not in content:
+        return storage_update
+
     storage_update_template = textwrap.dedent('''
        (env/storage/store {src_env}
                           {offset}
@@ -17,9 +23,9 @@ def make_storage_update(storage_update, content):
             offset=int(offset, base=16),
             value=int(value, base=16))
 
-    pprint(content['balance'])
-    pprint(content['code'])
-    pprint(content['nonce'])
+    del content['storage']
+    if len(content.keys()) != 0:
+        logging.info('Unsupported: {}'.format(content.keys().sort()))
 
     return storage_update
 
@@ -43,14 +49,15 @@ def make_halt_update(src_env, out_string):
         out_list='(' + ' '.join(out_list_elems) + ')')
     return halt_update
 
-def make_pre_or_post(test_name, defun_name, my_address, pre_post_details, out_string):
+def make_pre_or_post(test_name, defun_name, my_address, pre_post_details,
+                     out_string):
 
     storage_update = '(mk-initial-env-{})'.format(test_name)
     for address, content in pre_post_details.items():
         if int(address, base=16) != int(my_address, base=16):
-            print('non-self address is not supported:')
-            pprint(address)
-            pprint(content)
+            logging.info('non-self address is not supported: {} {}'
+                         .format('<omitted>' or address,
+                                 '<omitted>' or content))
             continue
         storage_update = make_storage_update(storage_update,
                                                      content)
@@ -113,6 +120,13 @@ def main():
             ihl=int(details['env']['currentGasLimit'], base=16)
         )
 
+        for key in ['currentCoinbase', 'currentTimestamp', 'currentNumber',
+                    'currentDifficulty', 'currentGasLimit']:
+            del details['env'][key]
+        if len(details['env'].keys()) != 0:
+            logging.info('Unsupported: env.{}'
+                         .format(details['env'].keys().sort()))
+
         mk_context_template = textwrap.dedent('''
             (mk-context
               ;; ia
@@ -133,7 +147,13 @@ def main():
                {ie}
               ;; iw
               {iw})''')
-        assert(details['exec']['data'] == '0x')
+
+        if 'data' in details['exec']:
+            if details['exec']['data'] != '0x':
+                logging.info('Unsupported: exec.data: {}'
+                             .format('<omitted>' or details['exec']['data']))
+            del details['exec']['data']
+
         mk_context = mk_context_template.format(
             ia=int(details['exec']['address'], base=16),
             io=int(details['exec']['origin'], base=16),
@@ -180,7 +200,6 @@ def main():
             context=textwrap.indent(mk_context, '  '),
             substate=textwrap.indent(mk_substate, '  '))
 
-
         defun = "(defun mk-initial-env-{test_name} ()\n{mk_env})".format(
             test_name=test_name,
             mk_env=textwrap.indent(mk_env, '  '))
@@ -189,6 +208,12 @@ def main():
                                   'env-with-pre-{}'.format(test_name),
                                   details['exec']['address'],
                                   details['pre'], None)
+
+        if 'post' not in details:
+            details['post'] = copy.deepcopy(details['pre'])
+
+        if 'out' not in details:
+            details['out'] = '0x'
 
         defpost = make_pre_or_post(test_name,
                                    'env-with-post-{}'.format(test_name),
@@ -216,21 +241,28 @@ def main():
             defpre=defpre,
             defpost=defpost)
 
-        outfile = open('tmp/'+test_name+'.lisp', 'w')
+        outdir = os.path.join('tmp', os.path.dirname(args.infile))
+        if not os.path.exists(outdir):
+            os.makedirs(outdir)
+        outfile = open(outdir+'/'+test_name+'.lisp', 'w')
         outfile.write(file_content)
         outfile.close()
 
         listfile = open('tmp/testlist.lisp', 'a')
-        listfile.write('(include-book "{}")\n'.format(test_name))
+        listfile.write('(include-book "{}")\n'.format(outdir+'/'+test_name))
         listfile.close()
 
-        print(file_content)
+        for key in ['address', 'origin', 'gasPrice', 'caller', 'value',
+                    'gas', 'code']:
+            del details['exec'][key]
+        if len(details['exec'].keys()) != 0:
+            logging.info('Unsupported: exec.{}'.format(
+                details['exec'].keys().sort()))
 
-        pprint(details['gas'])
-        print('-'*80)
-        pprint(details['logs'])
-        print('-'*80)
-        pprint(details['callcreates'])
+        for key in ['env', 'exec', 'pre', 'post', 'out']:
+            del details[key]
+        if len(details.keys()) != 0:
+            logging.info('Unsupported: {}'.format(details.keys().sort()))
 
 if __name__ == "__main__":
     main()
