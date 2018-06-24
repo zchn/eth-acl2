@@ -31,6 +31,8 @@
 
 (defun env/rom (env) (nth 1 env))
 
+(defun env/rom/datasize (env) (rom/datasize (env/rom env)))
+
 (defun env/rom/byte-list-nthcdr (env n)
   (rom/byte-list-nthcdr (env/rom env) n))
 
@@ -73,6 +75,10 @@
 (defun env/context/Ia (env) (context/Ia (env/context env)))
 
 (defun env/context/Io (env) (context/Io (env/context env)))
+
+(defun env/context/Ip (env) (context/Ip (env/context env)))
+
+(defun env/context/Id (env) (context/Id (env/context env)))
 
 (defun env/context/Is (env) (context/Is (env/context env)))
 

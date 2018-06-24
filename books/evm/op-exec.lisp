@@ -228,21 +228,33 @@
 (defun exec-calldataload (env)
   (let* ((addr (env/stack/n env 0))
          (tmp-env (env/stack/push (env/stack/popn env 1)
-                                  (rom/n-w256 (env/rom env) addr)))
+                                  (take 32 (nthcdr (env/context/Id env) addr))))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
 (defun exec-calldatasize (env)
-  (let* ((datasize (rom/datasize (env/rom env)))
+  (let* ((datasize (length (env/context/Id env)))
          (tmp-env (env/stack/push env datasize))
          (new-env (env/pc++ tmp-env)))
     new-env))
 
 (defun exec-calldatacopy (env)
-  (exec-unsupported env "CALLDATACOPY"))
+  (let* ((memaddr (env/stack/n env 0))
+         (inaddr (env/stack/n env 1))
+         (datasize (env/stack/n env 2))
+         (stored-env
+           (env/mem/store-byte-array (env/stack/popn env 3)
+                                     memaddr
+                                     (take datasize (nthcdr (env/context/Id env)
+                                                            inaddr))))
+         (new-env (env/pc++ stored-env)))
+    new-env))
 
 (defun exec-codesize (env)
-  (exec-unsupported env "CODESIZE"))
+  (let* ((filled-env (env/stack/push env
+                      (env/rom/datasize env)))
+         (new-env (env/pc++ filled-env)))
+    new-env))
 
 (defun exec-codecopy (env)
   (let* ((mem-start (env/stack/n env 0))
@@ -257,7 +269,9 @@
     new-env))
 
 (defun exec-gasprice (env)
-  (exec-unsupported env "GASPRICE"))
+  (let* ((filled-env (env/stack/push env (env/context/Ip env)))
+         (new-env (env/pc++ filled-env)))
+    new-env))
 
 (defun exec-extcodesize (env)
   (exec-unsupported env "EXTCODESIZE"))
