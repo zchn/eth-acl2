@@ -50,6 +50,8 @@
 
 (defun env/mem (env) (nth 3 env))
 
+(defun env/mem/size (env) (memory/size (env/mem env)))
+
 (defun env/mem/load-w256 (env addr)
   (memory/load-w256 (env/mem env) addr))
 
@@ -130,6 +132,7 @@
                                             'return
                                             'revert
                                             'stop
+                                            'invalid
                                             'selfdestruct
                                             'unknown
                                             'unsupported)))))

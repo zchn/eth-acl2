@@ -11,6 +11,9 @@
 (defun memory/validp (memory)
   (true-listp memory))
 
+(defun memory/size (memory)
+  (length memory))
+
 (defun memory/load-byte (memory addr)
   (modfix-byte (nth addr memory)))
 

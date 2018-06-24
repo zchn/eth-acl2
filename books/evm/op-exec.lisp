@@ -382,10 +382,17 @@
     new-env))
 
 (defun exec-msize (env)
-  (exec-unsupported env "MSIZE"))
+  (let* ((filled-env (env/stack/push env
+                                     (* 32 (ceiling (env/mem/size env) 32))))
+         (new-env (env/pc++ filled-env)))
+    new-env))
 
 (defun exec-gas (env)
-  (exec-unsupported env "GAS"))
+  (let* ((filled-env (env/stack/push env
+                                     (env/gas env)))
+         ; TODO(zchn): also substract the cost of this instruction.
+         (new-env (env/pc++ filled-env)))
+    new-env))
 
 (defun exec-jumpdest (env) (env/pc++ env))
 
@@ -534,10 +541,15 @@
     new-env))
 
 (defun exec-invalid (env)
-  (exec-unsupported env "INVALID"))
+  (let* ((halted-env (env/set-halted env (cons 'invalid "Halted: INVALID")))
+         (new-env (env/pc++ halted-env)))
+    new-env))
 
 (defun exec-selfdestruct (env)
-  (exec-unsupported env "SELFDESTRUCT"))
+  (let* ((halted-env (env/set-halted env (cons 'selfdestruct "Halted: SELFDESTRUCT")))
+         ;; TODO(zchn): Register account for later destruction.
+         (new-env (env/pc++ halted-env)))
+    new-env))
 
 (defun exec-unknown (env)
   (let ((tmp-env
