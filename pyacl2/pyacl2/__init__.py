@@ -1,2 +1,1 @@
-def hello():
-    return "hello"
+from .bridge import *
