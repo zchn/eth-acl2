@@ -12,11 +12,12 @@ from typing import (
 
 _L = logging.getLogger(__name__)
 
+
 class ACL2Bridge:
 
     def __init__(self, sock_addr: str) -> 'ACL2Bridge':
         self.sock_addr = sock_addr
-        self.sock = None # type: Any
+        self.sock = None  # type: Any
         self._message_buffer = ''
 
     def connect(self) -> None:
@@ -48,9 +49,10 @@ class ACL2Bridge:
         if not matched_header:
             return None
         else:
-            self._message_buffer = matched_header.group('remainder') # type: str
-            msg_type = matched_header.group('type') # type: str
-            msg_len = int(matched_header.group('len')) # type: int
+            self._message_buffer = matched_header.group(
+                'remainder')  # type: str
+            msg_type = matched_header.group('type')  # type: str
+            msg_len = int(matched_header.group('len'))  # type: int
             return (msg_type, msg_len)
 
     def _extract_header(self) -> (str, int):
