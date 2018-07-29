@@ -12,7 +12,6 @@ from typing import (
 
 _L = logging.getLogger(__name__)
 
-
 class ACL2Bridge:
 
     def __init__(self, sock_addr: str) -> 'ACL2Bridge':
@@ -21,31 +20,35 @@ class ACL2Bridge:
         self._message_buffer = ''
 
     def connect(self) -> None:
-        _L.debug('Connecting to {}.'.format(self.sock_addr))
+        _L.warning('Connecting to {}.'.format(self.sock_addr))
         self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         self.sock.connect(self.sock_addr)
 
-        _L.info('hello message: {}'.format(self.read_message()))
+        mtype, mbody = self.read_message()
+        assert mtype == 'ACL2_BRIDGE_HELLO'
+        _L.warning('hello message: {}'.format((mtype, mbody)))
 
-        _L.info('ready message: {}'.format(self.read_message()))
+        _L.warning('ready message: {}'.format(self.read_message()))
 
     def close(self) -> None:
         self.sock.close()
 
     def send_command(self, mtype, cmd) -> None:
-        msg_format = '{mtype} {mlen}\n{cmd}'
-        self.sock.sendall(bytes(msg_format.format(mtype, len(cmd), cmd)))
+        msg_format = '{mtype} {mlen}\n{cmd}\n'
+        self.sock.sendall(msg_format.format(mtype=mtype, mlen=len(cmd), cmd=cmd).encode('utf-8'))
 
     def _fill_buffer(self) -> None:
         assert self.sock is not None
-        new_content = str(self.sock.recv(1024))
-        _L.debug('Got {}'.format(new_content))
+        new_content = self.sock.recv(1024).decode('utf-8')
+        _L.warning('Got {}'.format(new_content))
         self._message_buffer += new_content
 
     def _try_extract_header(self) -> Optional[Tuple[str, int]]:
+        _L.warning('message buffer is {}'.format(self._message_buffer))
         matched_header = re.match(
-            r'(?P<type>[A-Za-z][A-Za-z0-9_]*) (?P<len>[0-9]+)\n(?P<remainder>.*)',
+            r'(?s)(?P<type>[A-Za-z][A-Za-z0-9_]*) (?P<len>[0-9]+)\n(?P<remainder>.*)',
             self._message_buffer)
+        _L.warning('Header matching result {}'.format(matched_header))
         if not matched_header:
             return None
         else:
@@ -63,10 +66,12 @@ class ACL2Bridge:
         return maybe_header
 
     def _extract_body(self, msg_len: int) -> str:
-        while len(self._message_buffer) < msg_len:
+        # +1 because there is an extra newline at the end of the
+        # message body.
+        while len(self._message_buffer) < msg_len+1:
             self._fill_buffer()
         result = self._message_buffer[:msg_len]
-        self._message_buffer = self._message_buffer[msg_len:]
+        self._message_buffer = self._message_buffer[msg_len+1:]
         return result
 
     def read_message(self) -> (str, str):
