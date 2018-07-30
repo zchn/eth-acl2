@@ -5,5 +5,3 @@
 __author__ = """Kevin Chen"""
 __email__ = 'k_@berkeley.edu'
 __version__ = '0.1.0'
-
-from pyacl2.bridge import *

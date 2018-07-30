@@ -12,19 +12,15 @@ from pyacl2 import cli
 
 
 @pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+def default_bridge():
+    """An ACL2Bridge instance that contects to /tmp/acl2-socket."""
+    return pyacl2.ACL2Bridge('/tmp/acl2-socket')
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def test_connect_close(default_bridge):
+    """Testing ACL2Bridge.conntect."""
+    default_bridge.connect()
+    default_bridge.close()
 
 
 def test_command_line_interface():
