@@ -14,14 +14,22 @@ from pyacl2 import cli
 @pytest.fixture
 def default_bridge():
     """An ACL2Bridge instance that contects to /tmp/acl2-socket."""
-    return pyacl2.ACL2Bridge('/tmp/acl2-socket')
+    bridge = pyacl2.ACL2Bridge('/tmp/acl2-socket')
+    bridge.connect()
+    return bridge
 
 
-def test_connect_close(default_bridge):
-    """Testing ACL2Bridge.conntect."""
-    default_bridge.connect()
-    default_bridge.close()
+def test_connect_close():
+    """Testing ACL2Bridge.connect."""
+    bridge = pyacl2.ACL2Bridge('/tmp/acl2-socket')
+    bridge.connect()
+    bridge.close()
 
+
+def test_send_read_message(default_bridge):
+    """Sending and reading simple messages."""
+    default_bridge.send_lisp_command('(+ 1987 3)')
+    assert default_bridge.read_message() == ('RETURN', '1990')
 
 def test_command_line_interface():
     """Test the CLI."""
