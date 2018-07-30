@@ -2,6 +2,11 @@ import logging
 import re
 import socket
 
+from sexpdata import (
+    dumps,
+    loads,
+)
+
 from typing import (
     Any,
     Dict,
@@ -34,12 +39,44 @@ class ACL2Bridge:
     def close(self) -> None:
         self.sock.close()
 
+    #### Basic Interaction ####
+
     def send_command(self, mtype: Text, cmd: Text) -> None:
         msg_format = '{mtype} {mlen}\n{cmd}\n'
         self.sock.sendall(msg_format.format(mtype=mtype, mlen=len(cmd), cmd=cmd).encode('utf-8'))
 
+    def read_message(self) -> (Text, Text):
+        msg_type, msg_len = self._extract_header()
+        msg_body = self._extract_body(msg_len)
+        return msg_type, msg_body
+
     def send_lisp_command(self, cmd: Text) -> None:
         self.send_command('LISP', cmd)
+
+    #### Easy Interaction ####
+
+    def read_return(self) -> None:
+        mtype, mbody = self.read_message()
+        if mtype != 'RETURN':
+            raise ValueError('Expecting RETURN, got {}.'.format((mtype, mbody)))
+        return mbody
+
+    def read_ready(self) -> None:
+        mtype, mbody = self.read_message()
+        if mtype != 'READY':
+            raise ValueError('Expecting READY, got {}.'.format((mtype, mbody)))
+
+    def eval_sexp(self, sexp: Any) -> Any:
+        sexp_string = dumps(sexp)
+        return loads(self.eval_string(sexp_string))
+
+    def eval_string(self, sexp_string: Text) -> Text:
+        self.send_lisp_command(sexp_string)
+        retval = self.read_return()
+        self.read_ready()
+        return retval
+
+    #### Internal Helpers ####
 
     def _fill_buffer(self) -> None:
         assert self.sock is not None
@@ -77,8 +114,3 @@ class ACL2Bridge:
         result = self._message_buffer[:msg_len]
         self._message_buffer = self._message_buffer[msg_len+1:]
         return result
-
-    def read_message(self) -> (Text, Text):
-        msg_type, msg_len = self._extract_header()
-        msg_body = self._extract_body(msg_len)
-        return msg_type, msg_body
