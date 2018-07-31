@@ -18,14 +18,14 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest', ]
 
 setup(
-    author="Kevin Chen",
+    author='Kevin Chen',
     author_email='k_@berkeley.edu',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
@@ -33,14 +33,14 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    description="Python bindings for ACL2 Bridge.",
+    description='Python bindings for ACL2 Bridge.',
     entry_points={
         'console_scripts': [
             'pyacl2=pyacl2.cli:main',
         ],
     },
     install_requires=requirements,
-    license="Apache Software License 2.0",
+    license='Apache Software License 2.0',
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='pyacl2',

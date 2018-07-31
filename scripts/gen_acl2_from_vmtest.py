@@ -8,6 +8,7 @@ import textwrap
 
 logging.basicConfig(level=logging.INFO)
 
+
 def make_storage_update(storage_update, content):
     if 'storage' not in content:
         return storage_update
@@ -17,7 +18,7 @@ def make_storage_update(storage_update, content):
                           {offset}
                           {value})''')
 
-    for offset,value in content['storage'].items():
+    for offset, value in content['storage'].items():
         storage_update = storage_update_template.format(
             src_env=textwrap.indent(storage_update, '  '),
             offset=int(offset, base=16),
@@ -28,6 +29,7 @@ def make_storage_update(storage_update, content):
         logging.info('Unsupported: {}'.format(sorted(content.keys())))
 
     return storage_update
+
 
 def make_halt_update(src_env, out_string):
     if out_string is None:
@@ -49,6 +51,7 @@ def make_halt_update(src_env, out_string):
         out_list='(' + ' '.join(out_list_elems) + ')')
     return halt_update
 
+
 def make_pre_or_post(test_name, defun_name, my_address, pre_post_details,
                      out_string):
 
@@ -60,7 +63,7 @@ def make_pre_or_post(test_name, defun_name, my_address, pre_post_details,
                                  '<omitted>' or content))
             continue
         storage_update = make_storage_update(storage_update,
-                                                     content)
+                                             content)
 
     updates = make_halt_update(storage_update, out_string)
 
@@ -73,6 +76,7 @@ def make_pre_or_post(test_name, defun_name, my_address, pre_post_details,
         updates=textwrap.indent(updates, '  '))
 
     return defun
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -192,15 +196,15 @@ def main():
         mk_env = mk_env_template.format(
             pc=0,
             rom=mk_rom,
-            stack="(mk-empty-stack)",
-            mem="(mk-empty-memory)",
-            storage="(mk-empty-storage)",
-            halted="nil",
+            stack='(mk-empty-stack)',
+            mem='(mk-empty-memory)',
+            storage='(mk-empty-storage)',
+            halted='nil',
             gas=int(details['exec']['gas'], base=16),
             context=textwrap.indent(mk_context, '  '),
             substate=textwrap.indent(mk_substate, '  '))
 
-        defun = "(defun mk-initial-env-{test_name} ()\n{mk_env})".format(
+        defun = '(defun mk-initial-env-{test_name} ()\n{mk_env})'.format(
             test_name=test_name,
             mk_env=textwrap.indent(mk_env, '  '))
 
@@ -264,5 +268,6 @@ def main():
         if len(details.keys()) != 0:
             logging.info('Unsupported: {}'.format(sorted(details.keys())))
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()

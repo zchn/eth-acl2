@@ -43,8 +43,10 @@ def test_send_read_invalid_sexp(default_bridge):
     default_bridge.send_lisp_command('(+ 1987 3')
     mtype, mbody = default_bridge.read_message()
     assert mtype == 'ERROR'
-    assert mbody.startswith('Error during read-command:\nUnexpected end of file on #<STRING-INPUT-STREAM  :CLOSED')
+    assert mbody.startswith(
+        'Error during read-command:\nUnexpected end of file on #<STRING-INPUT-STREAM  :CLOSED')
     assert default_bridge.read_message() == ('READY', '')
+
 
 def test_eval_string(default_bridge):
     """test_eval_string."""
@@ -53,6 +55,7 @@ def test_eval_string(default_bridge):
     assert default_bridge.eval_string('(* 2 3)').ret == '6'
     assert default_bridge.eval_string('(list \'a 5 "b")').ret == '(A 5 "b")'
 
+
 def test_eval_sexp(default_bridge):
     """test_eval_sexp."""
     assert default_bridge.eval_sexp(11).sexp == 11
@@ -60,14 +63,16 @@ def test_eval_sexp(default_bridge):
     assert default_bridge.eval_sexp([Symbol('list'), 1, 'a', True]) == (
         pyacl2.SexpEvalResult(sexp=[1, 'a', Symbol('T')], stdout=''))
 
+
 def test_state_persistance(default_bridge):
-    """test_state_persistance"""
+    """test_state_persistance."""
     assert default_bridge.eval_string(
         '(include-book "std/strings/top" :dir :system)') == pyacl2.StrEvalResult(
             ret='NIL', stdout='')
     assert default_bridge.eval_string(
         '(str::strsubst "World" "Star" "Hello, World!")') == pyacl2.StrEvalResult(
             ret='"Hello, Star!"', stdout='')
+
 
 def test_command_line_interface():
     """Test the CLI."""

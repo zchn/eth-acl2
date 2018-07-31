@@ -20,13 +20,16 @@ _L = logging.getLogger(__name__)
 
 SexpType = Any
 
+
 class SexpEvalResult(NamedTuple):
     sexp: SexpType
     stdout: Text = ''
 
+
 class StrEvalResult(NamedTuple):
     ret: Text
     stdout: Text = ''
+
 
 class ACL2Bridge:
 
@@ -52,7 +55,8 @@ class ACL2Bridge:
 
     def send_command(self, mtype: Text, cmd: Text) -> None:
         msg_format = '{mtype} {mlen}\n{cmd}\n'
-        self.sock.sendall(msg_format.format(mtype=mtype, mlen=len(cmd), cmd=cmd).encode('utf-8'))
+        self.sock.sendall(msg_format.format(
+            mtype=mtype, mlen=len(cmd), cmd=cmd).encode('utf-8'))
 
     def read_message(self) -> (Text, Text):
         msg_type, msg_len = self._extract_header()
@@ -78,7 +82,7 @@ class ACL2Bridge:
     def eval_sexp(self, sexp: SexpType) -> SexpEvalResult:
         sexp_string = dumps(sexp)
         result = self.eval_string(sexp_string)
-        return SexpEvalResult(sexp = loads(result.ret), stdout = result.stdout)
+        return SexpEvalResult(sexp=loads(result.ret), stdout=result.stdout)
 
     def eval_string(self, sexp_string: Text) -> Text:
         self.send_lisp_command(sexp_string)
@@ -97,7 +101,8 @@ class ACL2Bridge:
             elif mtype == 'ERROR':
                 error.append(mbody)
             else:
-                raise ValueError('Unexpected output: {}'.format((mtype, mbody)))
+                raise ValueError(
+                    'Unexpected output: {}'.format((mtype, mbody)))
         if error:
             raise ValueError('ERROR: {}, ret so far: {}, stdout so far: {}'
                              .format(error, ret, stdout))
