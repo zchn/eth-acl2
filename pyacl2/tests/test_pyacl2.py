@@ -48,15 +48,26 @@ def test_send_read_invalid_sexp(default_bridge):
 
 def test_eval_string(default_bridge):
     """test_eval_string."""
-    assert default_bridge.eval_string('10') == '10'
-    assert default_bridge.eval_string('(* 2 3)') == '6'
-    assert default_bridge.eval_string('(list \'a 5 "b")') == '(A 5 "b")'
+    assert repr(default_bridge.eval_string('10')) == (
+        'StrEvalResult(ret=\'10\', stdout=\'\')')
+    assert default_bridge.eval_string('(* 2 3)').ret == '6'
+    assert default_bridge.eval_string('(list \'a 5 "b")').ret == '(A 5 "b")'
 
 def test_eval_sexp(default_bridge):
     """test_eval_sexp."""
-    assert default_bridge.eval_sexp(11) == 11
-    assert default_bridge.eval_sexp('a') == 'a'
-    assert default_bridge.eval_sexp([Symbol('list'), 1, 'a', True]) == [1, 'a', Symbol('T')]
+    assert default_bridge.eval_sexp(11).sexp == 11
+    assert default_bridge.eval_sexp('a').sexp == 'a'
+    assert default_bridge.eval_sexp([Symbol('list'), 1, 'a', True]) == (
+        pyacl2.SexpEvalResult(sexp=[1, 'a', Symbol('T')], stdout=''))
+
+def test_state_persistance(default_bridge):
+    """test_state_persistance"""
+    assert default_bridge.eval_string(
+        '(include-book "std/strings/top" :dir :system)') == pyacl2.StrEvalResult(
+            ret='NIL', stdout='')
+    assert default_bridge.eval_string(
+        '(str::strsubst "World" "Star" "Hello, World!")') == pyacl2.StrEvalResult(
+            ret='"Hello, Star!"', stdout='')
 
 def test_command_line_interface():
     """Test the CLI."""

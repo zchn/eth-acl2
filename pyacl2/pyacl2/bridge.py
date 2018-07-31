@@ -18,6 +18,16 @@ from typing import (
 
 _L = logging.getLogger(__name__)
 
+SexpType = Any
+
+class SexpEvalResult(NamedTuple):
+    sexp: SexpType
+    stdout: Text = ''
+
+class StrEvalResult(NamedTuple):
+    ret: Text
+    stdout: Text = ''
+
 class ACL2Bridge:
 
     def __init__(self, sock_addr: Text) -> 'ACL2Bridge':
@@ -29,7 +39,6 @@ class ACL2Bridge:
         _L.info('Connecting to {}.'.format(self.sock_addr))
         self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         self.sock.connect(self.sock_addr)
-
         mtype, mbody = self.read_message()
         assert mtype == 'ACL2_BRIDGE_HELLO'
         _L.info('hello message: {}'.format((mtype, mbody)))
@@ -55,26 +64,44 @@ class ACL2Bridge:
 
     #### Easy Interaction ####
 
-    def read_return(self) -> None:
-        mtype, mbody = self.read_message()
-        if mtype != 'RETURN':
-            raise ValueError('Expecting RETURN, got {}.'.format((mtype, mbody)))
-        return mbody
+    # def read_return(self) -> None:
+    #     mtype, mbody = self.read_message()
+    #     if mtype != 'RETURN':
+    #         raise ValueError('Expecting RETURN, got {}.'.format((mtype, mbody)))
+    #     return mbody
 
-    def read_ready(self) -> None:
-        mtype, mbody = self.read_message()
-        if mtype != 'READY':
-            raise ValueError('Expecting READY, got {}.'.format((mtype, mbody)))
+    # def read_ready(self) -> None:
+    #     mtype, mbody = self.read_message()
+    #     if mtype != 'READY':
+    #         raise ValueError('Expecting READY, got {}.'.format((mtype, mbody)))
 
-    def eval_sexp(self, sexp: Any) -> Any:
+    def eval_sexp(self, sexp: SexpType) -> SexpEvalResult:
         sexp_string = dumps(sexp)
-        return loads(self.eval_string(sexp_string))
+        result = self.eval_string(sexp_string)
+        return SexpEvalResult(sexp = loads(result.ret), stdout = result.stdout)
 
     def eval_string(self, sexp_string: Text) -> Text:
         self.send_lisp_command(sexp_string)
-        retval = self.read_return()
-        self.read_ready()
-        return retval
+        ret = None
+        stdout = ''
+        error = []
+        while True:
+            mtype, mbody = self.read_message()
+            if mtype == 'READY':
+                break
+            elif mtype == 'RETURN':
+                assert ret is None
+                ret = mbody
+            elif mtype == 'STDOUT':
+                stdout += mbody
+            elif mtype == 'ERROR':
+                error.append(mbody)
+            else:
+                raise ValueError('Unexpected output: {}'.format((mtype, mbody)))
+        if error:
+            raise ValueError('ERROR: {}, ret so far: {}, stdout so far: {}'
+                             .format(error, ret, stdout))
+        return StrEvalResult(ret=ret, stdout=stdout)
 
     #### Internal Helpers ####
 
