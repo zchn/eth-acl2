@@ -4,6 +4,11 @@
 (include-book "op")
 (include-book "op-exec")
 
+;; The dispatch below covers the Byzantium instruction set (see op.lisp for the
+;; exact scope: Ethereum mainnet blocks 4370000 through 7279999).  Anything
+;; outside it falls through to exec-unknown, which halts the machine rather
+;; than guessing at post-Byzantium semantics.
+
 (defund env/step (env)
   (if (env/halted env) env
       (if (env/has-nextop env)

@@ -4,6 +4,18 @@
 
 (include-book "env")
 
+;; This is the instruction set of the Byzantium hard fork, i.e. Ethereum
+;; mainnet blocks 4370000 (where Byzantium activated) through 7279999 (the
+;; block before Constantinople/Petersburg superseded it).  Opcodes introduced
+;; after Byzantium are deliberately not recognised here: SHL (1b), SHR (1c),
+;; SAR (1d), EXTCODEHASH (3f) and CREATE2 (f5) from Constantinople, CHAINID
+;; (46) and SELFBALANCE (47) from Istanbul, and everything later.  env/step
+;; halts on an unrecognised opcode as 'unknown, so adding one of those to a ROM
+;; is reported rather than silently mis-executed.
+;;
+;; Three Byzantium opcodes are still missing and should be added here:
+;; RETURNDATASIZE (3d), RETURNDATACOPY (3e) and STATICCALL (fa).
+
 (defun op/stopp (op) (equal op "00"))
 (defun op/addp (op) (equal op "01"))
 (defun op/mulp (op) (equal op "02"))

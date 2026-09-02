@@ -303,6 +303,8 @@
          (new-env (env/pc++ pushed-env)))
     new-env))
 
+;; Byzantium is a proof-of-work fork, so DIFFICULTY is the block's difficulty.
+;; The Merge's reinterpretation of this opcode as PREVRANDAO is out of scope.
 (defun exec-difficulty (env)
   (let* ((pushed-env
            (env/stack/push env

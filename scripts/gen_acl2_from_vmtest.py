@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+"""Generate an eth-acl2 test book from an ethereum/tests VMTest fixture.
+
+eth-acl2 models the Byzantium hard fork (Ethereum mainnet blocks 4370000
+through 7279999), so the fixtures fed to this script must be the ones written
+against those rules: the flat VMTests JSON layout with top-level 'exec', 'pre',
+'post' and 'out' keys.  Later fixture formats key their expectations by network
+name and encode post-Byzantium behaviour, and are not understood here.
+"""
 import argparse
 import copy
 import json
@@ -76,7 +84,8 @@ def make_pre_or_post(test_name, defun_name, my_address, pre_post_details,
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Generate an eth-acl2 stub from a json VMTest file.')
+        description='Generate an eth-acl2 stub from a json VMTest file '
+                    '(Byzantium-era fixtures only; see the module docstring).')
     parser.add_argument('infile',
                         help='where to read the json VMTest file.')
     args = parser.parse_args()
